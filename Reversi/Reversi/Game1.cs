@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Reversi.GameStates;
 
 namespace Reversi
 {
@@ -39,8 +40,7 @@ namespace Reversi
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            GameStateManager.Instance.SetContent(Content);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Reversi
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            GameStateManager.Instance.UnloadContent();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Reversi
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            GameStateManager.Instance.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -75,7 +75,7 @@ namespace Reversi
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            GameStateManager.Instance.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }
