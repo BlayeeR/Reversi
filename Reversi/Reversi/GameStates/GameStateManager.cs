@@ -11,6 +11,7 @@ namespace Reversi.GameStates
         // Instance of the game state manager     
         private static GameStateManager _instance;
         private ContentManager _content;
+        public Vector2 Dimensions { private set; get; }
 
         // Stack for the screens     
         private Stack<GameState> _screens = new Stack<GameState>();
@@ -27,10 +28,9 @@ namespace Reversi.GameStates
             }
         }
 
-        // Sets the content manager
-        public void SetContent(ContentManager content)
+        public GameStateManager()
         {
-            _content = content;
+            Dimensions = new Vector2(1280, 720);
         }
 
         // Adds a new screen to the stack 
@@ -92,6 +92,12 @@ namespace Reversi.GameStates
             {
                 // Log the exception
             }
+        }
+
+        // Sets the content manager
+        public void SetContent(ContentManager content)
+        {
+            _content = content;
         }
 
         // Updates the top screen. 
