@@ -27,8 +27,9 @@ namespace Reversi
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            graphics.PreferredBackBufferWidth = (int)GameStateManager.Instance.Dimensions.X;
+            graphics.PreferredBackBufferHeight = (int)GameStateManager.Instance.Dimensions.Y;
+            graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -41,6 +42,7 @@ namespace Reversi
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             GameStateManager.Instance.SetContent(Content);
+            GameStateManager.Instance.AddScreen(new SplashScreen(GraphicsDevice));
         }
 
         /// <summary>
@@ -59,9 +61,6 @@ namespace Reversi
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             GameStateManager.Instance.Update(gameTime);
 
             base.Update(gameTime);
