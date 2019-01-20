@@ -47,7 +47,9 @@ namespace Reversi.GameState
                     _screens.Peek().LoadContent(Globals.Content);
                 }
             }
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
             {
                 // Log the exception
             }
@@ -63,7 +65,9 @@ namespace Reversi.GameState
                     var screen = _screens.Peek();
                     _screens.Pop();
                 }
+#pragma warning disable CS0168 // Variable is declared but never used
                 catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
                 {
                     // Log the exception
                 }
@@ -87,7 +91,9 @@ namespace Reversi.GameState
                 ClearScreens();
                 AddScreen(screen);
             }
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
             {
                 // Log the exception
             }
@@ -103,7 +109,9 @@ namespace Reversi.GameState
                     _screens.Peek().Update(gameTime);
                 }
             }
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
             {
                 // Log the exception
             }
@@ -119,7 +127,9 @@ namespace Reversi.GameState
                     _screens.Peek().Draw(spriteBatch);
                 }
             }
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
             {
                 // Log the exception
             }

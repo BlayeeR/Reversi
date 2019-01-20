@@ -47,7 +47,10 @@
     <Compile Include="GameState\GameStateManager.cs" />
     <Compile Include="GameState\IGameState.cs" />
     <Compile Include="InputManager.cs" />
-    <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\TitleMenu.cs" />
+    <Compile Include="Menu\IMenu.cs" />
+    <Compile Include="Menu\Menu.cs" />
+    <Compile Include="Menu\MenuManager.cs" />
     <Compile Include="Screens\SplashScreen.cs" />
     <Compile Include="Screens\TitleScreen.cs" />
     <Compile Include="Program.cs" />
