@@ -12,9 +12,7 @@ namespace Reversi.Sprites
     public class Button2D : Basic2D
     {
         public string _text;
-
         public SpriteFont font;
-        
 
         public Button2D(string path, Vector2 position, string text, string fontPath) : base(path, position)
         {
@@ -33,7 +31,6 @@ namespace Reversi.Sprites
 
         private void Button2D_OnMouseOver(object sender, EventArgs e)
         {
-            DrawingColor = Color.Blue;
         }
 
         private void Button2D_OnMouseOut(object sender, EventArgs e)
@@ -48,9 +45,13 @@ namespace Reversi.Sprites
                 font = Globals.Content.Load<SpriteFont>(fontPath);
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
-            base.Update();
+            if (IsActive)
+                DrawingColor = Color.LightBlue;
+            else
+                DrawingColor = Color.White;
+            base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

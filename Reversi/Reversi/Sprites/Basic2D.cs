@@ -13,12 +13,10 @@ namespace Reversi.Sprites
     {
         public Vector2 Position, Dimensions;
         private Texture2D _texture;
-        public event EventHandler OnMouseOver;
-        public event EventHandler OnMouseOut;
-        public event EventHandler OnPressed;
-        Rectangle mouseRec, chuj;
+        public event EventHandler OnMouseOver, OnMouseOut, OnPressed;
         private bool mouseOverOldState=false;
-        
+        public bool IsActive;
+
         public Color DrawingColor = Color.White;
 
         public Basic2D(string path, Vector2 position, Vector2 dimensions) :  this()
@@ -43,7 +41,7 @@ namespace Reversi.Sprites
         }
 
 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             Vector2 mousePosition = new Vector2(InputManager.Instance.MouseState().Position.X, InputManager.Instance.MouseState().Position.Y);
             if(mousePosition.X >= Position.X - Dimensions.X / 2 && mousePosition.Y >= Position.Y - Dimensions.Y / 2 && mousePosition.X <= Position.X + Dimensions.X / 2 && mousePosition.Y <=Position.Y + Dimensions.Y / 2)
@@ -68,6 +66,11 @@ namespace Reversi.Sprites
             if (InputManager.Instance.LMBPressed())
                 OnPressed(this, null);
 
+        }
+
+        private void Basic2D_OnButtonSelected(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void Basic2D_OnMouseOut(object sender, EventArgs e)
