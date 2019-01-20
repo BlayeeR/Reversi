@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Xml.Serialization;
 
-namespace Reversi.GameStates
+namespace Reversi.GameState
 {
     public abstract class GameState : IGameState
     {

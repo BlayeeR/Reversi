@@ -4,13 +4,12 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-namespace Reversi.GameStates
+namespace Reversi.GameState
 {
     public class GameStateManager
     {
         // Instance of the game state manager     
         private static GameStateManager _instance;
-        private ContentManager _content;
         public Vector2 Dimensions { private set; get; }
 
         // Stack for the screens     
@@ -43,9 +42,9 @@ namespace Reversi.GameStates
                 // Initialize the screen
                 _screens.Peek().Initialize();
                 // Call the LoadContent on the screen
-                if (_content != null)
+                if (Globals.Content != null)
                 {
-                    _screens.Peek().LoadContent(_content);
+                    _screens.Peek().LoadContent(Globals.Content);
                 }
             }
             catch (Exception ex)
@@ -92,12 +91,6 @@ namespace Reversi.GameStates
             {
                 // Log the exception
             }
-        }
-
-        // Sets the content manager
-        public void SetContent(ContentManager content)
-        {
-            _content = content;
         }
 
         // Updates the top screen. 
