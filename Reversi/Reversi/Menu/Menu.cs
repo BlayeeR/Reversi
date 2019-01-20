@@ -15,15 +15,19 @@ namespace Reversi.Menu
         public string Axis;
         public List<Button2D> Items;
         int itemNumber;
+        protected Game _game;
+        protected GraphicsDevice _graphicsDevice;
 
-        public Menu()
+        public Menu(GraphicsDevice graphicsDevice, Game game)
         {
+            _game = game;
+            _graphicsDevice = graphicsDevice;
             itemNumber = 0;
             Axis = "Y";
             Items = new List<Button2D>();
         }
 
-        public virtual void AlignMenuItems()
+        public void AlignMenuItems()
         {
             Vector2 dimensions = Vector2.Zero;
             foreach (Button2D button in Items)
@@ -46,13 +50,13 @@ namespace Reversi.Menu
             }
         }
 
-        public virtual void LoadContent()
+        public void LoadContent()
         {
             AlignMenuItems();
         }
 
 
-        public virtual void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if (Axis == "X")
             {

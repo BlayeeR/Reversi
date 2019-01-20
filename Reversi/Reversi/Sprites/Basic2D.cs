@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,12 @@ namespace Reversi.Sprites
     {
         public Vector2 Position, Dimensions;
         private Texture2D _texture;
-        public event EventHandler OnMouseOver, OnMouseOut, OnPressed;
+        public virtual event EventHandler OnMouseOver, OnMouseOut, OnPressed;
         private bool mouseOverOldState=false;
-        public bool IsActive;
+        private MouseState oldMouseState, currentMouseState;
+        public bool IsActive=false;
 
-        public Color DrawingColor = Color.White;
+        public Color DrawingColor;
 
         public Basic2D(string path, Vector2 position, Vector2 dimensions) :  this()
         {
@@ -35,19 +37,25 @@ namespace Reversi.Sprites
 
         private Basic2D()
         {
-            OnPressed += Basic2D_OnPressed;
+            DrawingColor = Color.White;
             OnMouseOver += Basic2D_OnMouseOver;
             OnMouseOut += Basic2D_OnMouseOut;
         }
 
-
         public virtual void Update(GameTime gameTime)
         {
+            oldMouseState = currentMouseState;
+            currentMouseState = Mouse.GetState();
             Vector2 mousePosition = new Vector2(InputManager.Instance.MouseState().Position.X, InputManager.Instance.MouseState().Position.Y);
-            if(mousePosition.X >= Position.X - Dimensions.X / 2 && mousePosition.Y >= Position.Y - Dimensions.Y / 2 && mousePosition.X <= Position.X + Dimensions.X / 2 && mousePosition.Y <=Position.Y + Dimensions.Y / 2)
+            if (mousePosition.X >= Position.X - Dimensions.X / 2 && mousePosition.Y >= Position.Y - Dimensions.Y / 2 && mousePosition.X <= Position.X + Dimensions.X / 2 && mousePosition.Y <= Position.Y + Dimensions.Y / 2)
+            {
+                if (InputManager.Instance.LMBPressed())
+                    OnPressed(this, null);
                 OnMouseOver(this, null);
+            }
             else if (mouseOverOldState)
                 OnMouseOut(this, null);
+            
 
         }
 
@@ -63,14 +71,8 @@ namespace Reversi.Sprites
         private void Basic2D_OnMouseOver(object sender, EventArgs e)
         {
             mouseOverOldState = true;
-            if (InputManager.Instance.LMBPressed())
-                OnPressed(this, null);
+            
 
-        }
-
-        private void Basic2D_OnButtonSelected(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private void Basic2D_OnMouseOut(object sender, EventArgs e)
@@ -78,9 +80,5 @@ namespace Reversi.Sprites
             mouseOverOldState = false;
         }
 
-        private void Basic2D_OnPressed(object sender, EventArgs e)
-        {
-            
-        }
     }
 }
