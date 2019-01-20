@@ -9,11 +9,13 @@ namespace Reversi.GameState
     public abstract class GameState : IGameState
     {
         protected GraphicsDevice _graphicsDevice;
+        protected Game _game;
         [XmlIgnore]
         public Type Type;
-        public GameState(GraphicsDevice graphicsDevice)
+        public GameState(GraphicsDevice graphicsDevice, Game game)
         {
             _graphicsDevice = graphicsDevice;
+            _game = game;
             Type = this.GetType();
         }
         public abstract void Initialize();

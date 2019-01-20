@@ -16,10 +16,12 @@ namespace Reversi.Screens
     public class TitleScreen : GameState.GameState
     {
         public MenuManager menuManager = new MenuManager();
-        public TitleMenu menu = new TitleMenu();
-        public TitleScreen(GraphicsDevice graphicsDevice) : base(graphicsDevice)
+        public TitleMenu menu;
+        public TitleScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
-
+            _game = game;
+            _graphicsDevice = graphicsDevice;
+            menu = new TitleMenu(_graphicsDevice, _game);
             menuManager.AddMenu(menu);
         }
 

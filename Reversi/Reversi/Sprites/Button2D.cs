@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Reversi.Sprites
 {
@@ -13,6 +14,7 @@ namespace Reversi.Sprites
     {
         public string _text;
         public SpriteFont font;
+        public override event EventHandler OnPressed;
 
         public Button2D(string path, Vector2 position, string text, string fontPath) : base(path, position)
         {
@@ -20,22 +22,11 @@ namespace Reversi.Sprites
             if (fontPath != String.Empty)
                 font = Globals.Content.Load<SpriteFont>(fontPath);
             this.OnMouseOut += Button2D_OnMouseOut;
-            this.OnMouseOver += Button2D_OnMouseOver;
-            this.OnPressed += Button2D_OnPressed;
             
-        }
-
-        private void Button2D_OnPressed(object sender, EventArgs e)
-        {
-        }
-
-        private void Button2D_OnMouseOver(object sender, EventArgs e)
-        {
         }
 
         private void Button2D_OnMouseOut(object sender, EventArgs e)
         {
-            DrawingColor = Color.White;
         }
 
         public Button2D(string path, Vector2 position, Vector2 dimensions, string text, string fontPath) : base(path, position, dimensions)
@@ -48,9 +39,13 @@ namespace Reversi.Sprites
         public override void Update(GameTime gameTime)
         {
             if (IsActive)
+            {
                 DrawingColor = Color.LightBlue;
+            }
             else
                 DrawingColor = Color.White;
+            if (IsActive && InputManager.Instance.KeyPressed(Keys.Enter))
+                this.OnPressed(this, null);
             base.Update(gameTime);
         }
 

@@ -46,8 +46,7 @@ namespace Reversi
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            GameState.GameStateManager.Instance.AddScreen(new SplashScreen(GraphicsDevice));
+            GameState.GameStateManager.Instance.AddScreen(new SplashScreen(GraphicsDevice, this));
         }
 
         /// <summary>

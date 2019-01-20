@@ -6,51 +6,42 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Reversi.GameState;
 using Reversi.Sprites;
 
 namespace Reversi.Screens
 {
-    public class SplashScreen : GameState.GameState
+    public class MultiplayerScreen : GameState.GameState
     {
-        Basic2D SplashImage;
-
-        public SplashScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
+        public DiskManager diskManager;
+        public MultiplayerScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
-            _graphicsDevice = graphicsDevice;
+            diskManager = new DiskManager(new Vector2(50), new Vector2(500));
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _graphicsDevice.Clear(Color.Black);
+            _graphicsDevice.Clear(Color.AliceBlue);
             spriteBatch.Begin();
-            SplashImage.Draw(spriteBatch);
+            diskManager.Draw(spriteBatch);
             spriteBatch.End();
         }
 
         public override void Initialize()
         {
-
         }
 
         public override void LoadContent(ContentManager content)
         {
-            SplashImage = new Basic2D("SplashScreen/SplashImage", new Vector2(100,120));
-
         }
 
         public override void UnloadContent()
         {
-
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (InputManager.Instance.KeyPressed(Keys.Enter))
-            {
-                GameStateManager.Instance.ChangeScreen(new TitleScreen(_graphicsDevice, _game));
-            }
+            diskManager.Update(gameTime);
         }
     }
 }
