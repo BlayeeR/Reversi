@@ -41,7 +41,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DiskManager.cs" />
+    <Compile Include="Tile.cs" />
+    <Compile Include="TileManager.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="GameState\GameState.cs" />
@@ -59,7 +60,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprites\Basic2D.cs" />
     <Compile Include="Sprites\Button2D.cs" />
-    <Compile Include="Disk.cs" />
     <Compile Include="XmlManager.cs" />
   </ItemGroup>
   <ItemGroup>

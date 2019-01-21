@@ -12,10 +12,10 @@ namespace Reversi.Screens
 {
     public class MultiplayerScreen : GameState.GameState
     {
-        public DiskManager diskManager;
+        public TileManager diskManager;
         public MultiplayerScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
-            diskManager = new DiskManager(new Vector2(50), new Vector2(500));
+            diskManager = new TileManager(new Vector2(0), new Vector2(500));
             
         }
 

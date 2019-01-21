@@ -25,7 +25,7 @@
 /processorParam:TextureFormat=Color
 /build:Game/Disk.png
 
-#begin Game/Disk.png
+#begin Game/Tile.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -35,7 +35,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Game/Disk.png
+/build:Game/Tile.png
 
 #begin SplashScreen/SplashImage.png
 /importer:TextureImporter
