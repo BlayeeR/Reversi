@@ -18,6 +18,7 @@ namespace Reversi
             Side = side;
             DestinationTile = destinationTile;
             TakenTiles = takenTiles;
+            SourceTile = sourceTile;
             destinationTile.DrawingColor = Color.Gray;
         }
         public void Perform()

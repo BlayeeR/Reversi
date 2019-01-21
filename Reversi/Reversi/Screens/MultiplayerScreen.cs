@@ -15,7 +15,7 @@ namespace Reversi.Screens
         public TileManager diskManager;
         public MultiplayerScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
-            diskManager = new TileManager(new Vector2(0), new Vector2(500));
+            diskManager = new TileManager(new Vector2(0), new Vector2(500), true);
             
         }
 
