@@ -40,6 +40,11 @@ namespace Reversi.Sprites
             DrawingColor = Color.White;
             OnMouseOver += Basic2D_OnMouseOver;
             OnMouseOut += Basic2D_OnMouseOut;
+            OnPressed += Basic2D_OnPressed;
+        }
+
+        private void Basic2D_OnPressed(object sender, EventArgs e)
+        {
         }
 
         public virtual void Update(GameTime gameTime)
@@ -47,7 +52,7 @@ namespace Reversi.Sprites
             oldMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
             Vector2 mousePosition = new Vector2(InputManager.Instance.MouseState().Position.X, InputManager.Instance.MouseState().Position.Y);
-            if (mousePosition.X >= Position.X - Dimensions.X / 2 && mousePosition.Y >= Position.Y - Dimensions.Y / 2 && mousePosition.X <= Position.X + Dimensions.X / 2 && mousePosition.Y <= Position.Y + Dimensions.Y / 2)
+            if (mousePosition.X > Position.X - Dimensions.X / 2 && mousePosition.Y > Position.Y - Dimensions.Y / 2 && mousePosition.X < Position.X + Dimensions.X / 2 && mousePosition.Y < Position.Y + Dimensions.Y / 2)
             {
                 if (InputManager.Instance.LMBPressed())
                     OnPressed(this, null);
