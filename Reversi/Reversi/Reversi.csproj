@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Movement.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileManager.cs" />
     <Compile Include="Globals.cs" />

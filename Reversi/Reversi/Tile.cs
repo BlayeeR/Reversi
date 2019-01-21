@@ -12,34 +12,44 @@ namespace Reversi
     public class Tile 
     {
         public Vector2 Position { internal set; get; }
-        public bool Side { internal set; get; }
+        public bool Side { set { _side = value;
+                if (_side)
+                    diskSprite.DrawingColor = Color.White;
+                else
+                    diskSprite.DrawingColor = new Color(40, 40, 40, 256);
+            } get { return _side; } }
+        private bool _side;
         public bool Visible = false;
+        public Color DrawingColor { set { tileSprite.DrawingColor = value; } }
         private Basic2D tileSprite, diskSprite;
+        public event EventHandler OnTilePressed, OnMouseOver, OnMouseOut;
         public Tile(bool side, bool visible, Vector2 position, Vector2 dimensions)
         {
             Position = position;
             tileSprite = new Basic2D("Game/Tile", position, dimensions);
             diskSprite = new Basic2D("Game/Disk", position, dimensions * 0.8f);
             Side = side;
-            if (Side)
-                diskSprite.DrawingColor = Color.White;
-            else
-                diskSprite.DrawingColor = new Color(40, 40, 40, 256);
             Visible = visible;
-            tileSprite.OnPressed += Sprite_OnPressed;
+            tileSprite.OnPressed += TileSprite_OnPressed;
             tileSprite.OnMouseOver += TileSprite_OnMouseOver;
             tileSprite.OnMouseOut += TileSprite_OnMouseOut;
 
+
+        }
+
+        private void TileSprite_OnPressed(object sender, EventArgs e)
+        {
+            OnTilePressed(this, null);
         }
 
         private void TileSprite_OnMouseOut(object sender, EventArgs e)
         {
-            tileSprite.DrawingColor = Color.White;
+            OnMouseOut(this, null);
         }
 
         private void TileSprite_OnMouseOver(object sender, EventArgs e)
         {
-            tileSprite.DrawingColor =Color.Gray;
+            OnMouseOver(this, null);
         }
 
         public void Update(GameTime gameTime)
@@ -48,13 +58,6 @@ namespace Reversi
             diskSprite.Update(gameTime);
         }
 
-        private void Sprite_OnPressed(object sender, EventArgs e)
-        {
-            if (Visible)
-                ChangeSide();
-            else
-                Visible = true;
-        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -66,10 +69,6 @@ namespace Reversi
         public void ChangeSide()
         {
             Side = !Side;
-            if (Side)
-                diskSprite.DrawingColor = Color.White;
-            else
-                diskSprite.DrawingColor = new Color(40, 40, 40, 256);
         }
     }
 }
