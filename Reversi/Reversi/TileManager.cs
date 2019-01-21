@@ -18,9 +18,9 @@ namespace Reversi
         List<Movement> movements;
         private event EventHandler OnSideChange, OnMovePerformed;
         private Button2D scoreText;
-        private bool _currentSide, _singleplayer=false;
+        private bool _currentSide, _singleplayer = false;
         private double aiMovementDelay = 0;
-        public int PlayerOneScore = 0, PlayerTwoScore = 0;
+        public int PlayerOneScore = 0, PlayerTwoScore = 0, previousMovements = 0;
         private bool CurrentSide { set { _currentSide = value;//false player1, true ai/player2
                 OnSideChange(this, null);
             } get { return _currentSide; } }
@@ -51,12 +51,12 @@ namespace Reversi
             tiles[(int)boardSize / 2 - 1][(int)boardSize / 2].ChangeSide();
             tiles[(int)boardSize / 2][(int)boardSize / 2-1].Visible = true;
             tiles[(int)boardSize / 2][(int)boardSize / 2 - 1].ChangeSide();
-            scoreText = new Button2D("TitleScreen/Button", new Vector2(215, 850), $"", "TitleScreen/CreditsFont");
+            scoreText = new Button2D("TitleScreen/Button", new Vector2(225, 850), $"", "TitleScreen/CreditsFont");
             scoreText.UnselectedFontColor = Color.Black;
             if (_singleplayer)
-                scoreText._text = $"Black score: {PlayerOneScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}\nCurrent move:";
+                scoreText._text = $"Player score: {PlayerOneScore}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
             else
-                scoreText._text = $"Black score: {PlayerOneScore}\nWhite score: {PlayerTwoScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}\n Current move:";
+                scoreText._text = $"Black score: {PlayerOneScore}\nWhite score: {PlayerTwoScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
             OnSideChange += TileManager_OnSideChange;
             OnMovePerformed += TileManager_OnMovePerformed;
             movements = CalculatePossibleMovements(false);
@@ -74,46 +74,52 @@ namespace Reversi
                 PlayerTwoScore += movement.Score();
             }
             if (_singleplayer)
-                scoreText._text = $"Black score: {PlayerOneScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}\nCurrent move:";
+                scoreText._text = $"Player score: {PlayerOneScore}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
             else
-                scoreText._text = $"Black score: {PlayerOneScore}\nWhite score: {PlayerTwoScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}\n Current move:";
+                scoreText._text = $"Black score: {PlayerOneScore}\nWhite score: {PlayerTwoScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
         }
 
         private void TileManager_OnSideChange(object sender, EventArgs e)
         {
+            previousMovements = movements.Count;
             movements = CalculatePossibleMovements(CurrentSide);
-            if(movements.Count == 0)
+            if (movements.Count == 0 && previousMovements == 0)
             {
-                if(_singleplayer)
+                if (previousMovements == 0)
                 {
-                    if(CountTiles(false) > CountTiles(true))//player win
+                    if (_singleplayer)
                     {
+                        if (CountTiles(false) > CountTiles(true))//player win
+                        {
 
-                    }
-                    else if(CountTiles(false) == CountTiles(true))
-                    {
-                        //draw
+                        }
+                        else if (CountTiles(false) == CountTiles(true))
+                        {
+                            //draw
+                        }
+                        else
+                        {
+                            //playerlose
+                        }
                     }
                     else
                     {
-                        //playerlose
+                        if (CountTiles(false) > CountTiles(true))//black win
+                        {
+
+                        }
+                        else if (CountTiles(false) == CountTiles(true))
+                        {
+                            //draw
+                        }
+                        else
+                        {
+                            //white win
+                        }
                     }
                 }
                 else
-                {
-                    if (CountTiles(false) > CountTiles(true))//black win
-                    {
-
-                    }
-                    else if (CountTiles(false) == CountTiles(true))
-                    {
-                        //draw
-                    }
-                    else
-                    {
-                        //white win
-                    }
-                }
+                CurrentSide = !CurrentSide;
             }
         }
 
