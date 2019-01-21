@@ -29,7 +29,7 @@ namespace Reversi.GameState
 
         public GameStateManager()
         {
-            Dimensions = new Vector2(1280, 720);
+            Dimensions = new Vector2(851, 992);
         }
 
         // Adds a new screen to the stack 

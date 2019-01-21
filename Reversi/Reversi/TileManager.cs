@@ -16,9 +16,11 @@ namespace Reversi
         private Vector2 _gameBoardPosition, _gameBoardDimensions;
         private int boardSize = 8;
         List<Movement> movements;
-        private event EventHandler OnSideChange;
+        private event EventHandler OnSideChange, OnMovePerformed;
         private bool _currentSide, _singleplayer=false;
-        private bool CurrentSide { set { _currentSide = value;
+        private double aiMovementDelay = 0;
+        public int PlayerOneScore = 0, PlayerTwoScore = 0;
+        private bool CurrentSide { set { _currentSide = value;//false player1, true ai/player2
                 OnSideChange(this, null);
             } get { return _currentSide; } }
         public TileManager(Vector2 gameBoardPosition, Vector2 gameBoardDimensions, bool singleplayer)
@@ -34,7 +36,6 @@ namespace Reversi
                 for (int j = 0; j < boardSize; j++)
                 {
                     Tile tile = new Tile(true, false, new Vector2(_gameBoardPosition.X + 0.02f * _gameBoardDimensions.X + j * tileSize.X + tileSize.X / 2, _gameBoardPosition.Y + 0.02f * _gameBoardDimensions.Y + i * tileSize.Y + tileSize.Y / 2), tileSize);
-                    //Tile tile = new Tile(_gameBoardPosition, tileSize);
                     tile.OnTilePressed += Tile_OnTilePressed;
                     tile.OnMouseOut += Tile_OnMouseOut;
                     tile.OnMouseOver += Tile_OnMouseOver;
@@ -50,7 +51,23 @@ namespace Reversi
             tiles[(int)boardSize / 2][(int)boardSize / 2-1].Visible = true;
             tiles[(int)boardSize / 2][(int)boardSize / 2 - 1].ChangeSide();
             OnSideChange += TileManager_OnSideChange;
+            OnMovePerformed += TileManager_OnMovePerformed;
             movements = CalculatePossibleMovements(false);
+        }
+
+        private void TileManager_OnMovePerformed(object sender, EventArgs e)
+        {
+            Movement movement = (sender as Movement);
+            if (!movement.Side)
+            {
+                PlayerOneScore += movement.Score();
+                PlayerOneScore *= PlayerOneScore;
+            }
+            else if (!_singleplayer)
+            {
+                PlayerTwoScore += movement.Score();
+                PlayerTwoScore *= PlayerOneScore;
+            }
         }
 
         private void TileManager_OnSideChange(object sender, EventArgs e)
@@ -60,48 +77,58 @@ namespace Reversi
 
         private void Tile_OnMouseOver(object sender, EventArgs e)
         {
-            foreach (Movement movement in movements)
+            if (!_singleplayer || (_singleplayer && !CurrentSide))
             {
-                if ((sender as Tile).Equals(movement.DestinationTile))
+                foreach (Movement movement in movements)
                 {
-                    movement.DestinationTile.DrawingColor = Color.DarkGray;
-                    movement.DestinationTile.Side = movement.Side;
-                    movement.DestinationTile.Visible = true;
-                    movement.SourceTile.DrawingColor = Color.DarkGray;
-                    foreach (Tile tile in movement.TakenTiles)
-                        tile.DrawingColor = Color.DarkGray;
+                    if ((sender as Tile).Equals(movement.DestinationTile))
+                    {
+                        movement.DestinationTile.DrawingColor = Color.LightGray;
+                        movement.DestinationTile.Side = movement.Side;
+                        movement.DestinationTile.Visible = true;
+                        movement.SourceTile.DrawingColor = Color.LightGray;
+                        foreach (Tile tile in movement.TakenTiles)
+                            tile.DrawingColor = Color.LightGray;
+                    }
                 }
             }
         }
 
         private void Tile_OnMouseOut(object sender, EventArgs e)
         {
-            foreach (Movement movement in movements)
+            if (!_singleplayer || (_singleplayer && !CurrentSide))
             {
-                if ((sender as Tile).Equals(movement.DestinationTile))
+                foreach (Movement movement in movements)
                 {
-                    movement.DestinationTile.DrawingColor = Color.Gray;
-                    movement.SourceTile.DrawingColor = Color.White;
-                    movement.DestinationTile.Visible = false;
-                    foreach (Tile tile in movement.TakenTiles)
-                        tile.DrawingColor = Color.White;
+                    if ((sender as Tile).Equals(movement.DestinationTile))
+                    {
+                        movement.DestinationTile.DrawingColor = Color.DarkGray;
+                        movement.SourceTile.DrawingColor = Color.White;
+                        movement.DestinationTile.Visible = false;
+                        foreach (Tile tile in movement.TakenTiles)
+                            tile.DrawingColor = Color.White;
+                    }
                 }
             }
         }
 
         private void Tile_OnTilePressed(object sender, EventArgs e)
         {
-            bool performed = false;
-            for(int i =0; i < movements.Count; i++)
-            { 
-                if ((sender as Tile).Equals(movements[i].DestinationTile))
+            if (!_singleplayer||(_singleplayer&&!CurrentSide))
+            {
+                bool performed = false;
+                for (int i = 0; i < movements.Count; i++)
                 {
-                    movements[i].Perform();
-                    performed = true;
+                    if ((sender as Tile).Equals(movements[i].DestinationTile))
+                    {
+                        movements[i].Perform();
+                        OnMovePerformed(movements[i], null);
+                        performed = true;
+                    }
                 }
+                if (performed)
+                    CurrentSide = !CurrentSide;
             }
-            if (performed)
-                CurrentSide = !CurrentSide;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -115,8 +142,16 @@ namespace Reversi
         {
             if(CurrentSide && _singleplayer)
             {
-                CalculatePossibleMovements(CurrentSide).OrderBy(o => o.TakenTiles.Count).Last().Perform();
-                CurrentSide = !CurrentSide;
+
+                aiMovementDelay += gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (aiMovementDelay >= 1500)
+                {
+                    Movement movement = CalculatePossibleMovements(CurrentSide).OrderBy(o => o.TakenTiles.Count).Last();
+                    movement.Perform();
+                    OnMovePerformed(movement, null);
+                    CurrentSide = !CurrentSide;
+                    aiMovementDelay = 0;
+                }
             }
             foreach (List<Tile> tilei in tiles)
                 foreach (Tile tile in tilei)
@@ -166,7 +201,7 @@ namespace Reversi
                                 if (!tile.Equals(takenTiles.Last()))
                                 {
                                     //new Movement(side, takenTiles.First(), takenTiles.Last(), takenTiles.Where(a => !a.Equals(takenTiles.First())).Where(b => !b.Equals(takenTiles.Last())).ToList());
-                                    movements.Add(new Movement(side, takenTiles.First(), tiles[x][y], takenTiles.Where(a => !a.Equals(takenTiles.First())).ToList()));
+                                    movements.Add(new Movement(side, takenTiles.First(), tiles[x][y], takenTiles.Where(a => !a.Equals(takenTiles.First())).ToList(), _singleplayer?(CurrentSide?false:true):true));
                                 }
                                 break;
                             }

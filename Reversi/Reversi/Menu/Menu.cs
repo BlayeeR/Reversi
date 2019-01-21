@@ -31,14 +31,14 @@ namespace Reversi.Menu
         {
             Vector2 dimensions = Vector2.Zero;
             foreach (Button2D button in Items)
-                dimensions += button.Dimensions;
+                dimensions += button.Dimensions ;
             dimensions = new Vector2((GameState.GameStateManager.Instance.Dimensions.X - dimensions.X) / 2, (GameState.GameStateManager.Instance.Dimensions.Y - dimensions.Y) / 2);
             foreach (Button2D button in Items)
             {
                 if (Axis == "X")
                     button.Position = new Vector2(dimensions.X, (GameState.GameStateManager.Instance.Dimensions.Y - button.Dimensions.Y) / 2);
                 else if (Axis == "Y")
-                    button.Position = new Vector2((GameState.GameStateManager.Instance.Dimensions.X - button.Dimensions.X) / 2, dimensions.Y);
+                    button.Position = new Vector2((GameState.GameStateManager.Instance.Dimensions.X ) / 2, dimensions.Y);
                 dimensions += button.Dimensions;
             }
         }

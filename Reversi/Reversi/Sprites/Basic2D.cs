@@ -19,7 +19,7 @@ namespace Reversi.Sprites
         private MouseState oldMouseState, currentMouseState;
         public bool IsActive=false;
 
-        public Color DrawingColor;
+        public Color DrawingColor = Color.White;
 
         public Basic2D(string path, Vector2 position, Vector2 dimensions) :  this()
         {
@@ -37,7 +37,6 @@ namespace Reversi.Sprites
 
         private Basic2D()
         {
-            DrawingColor = Color.White;
             OnMouseOver += Basic2D_OnMouseOver;
             OnMouseOut += Basic2D_OnMouseOut;
             OnPressed += Basic2D_OnPressed;
