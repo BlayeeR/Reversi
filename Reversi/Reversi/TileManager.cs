@@ -17,6 +17,7 @@ namespace Reversi
         private int boardSize = 8;
         List<Movement> movements;
         private event EventHandler OnSideChange, OnMovePerformed;
+        private Button2D scoreText;
         private bool _currentSide, _singleplayer=false;
         private double aiMovementDelay = 0;
         public int PlayerOneScore = 0, PlayerTwoScore = 0;
@@ -50,6 +51,12 @@ namespace Reversi
             tiles[(int)boardSize / 2 - 1][(int)boardSize / 2].ChangeSide();
             tiles[(int)boardSize / 2][(int)boardSize / 2-1].Visible = true;
             tiles[(int)boardSize / 2][(int)boardSize / 2 - 1].ChangeSide();
+            scoreText = new Button2D("TitleScreen/Button", new Vector2(215, 850), $"", "TitleScreen/CreditsFont");
+            scoreText.UnselectedFontColor = Color.Black;
+            if (_singleplayer)
+                scoreText._text = $"Black score: {PlayerOneScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}\nCurrent move:";
+            else
+                scoreText._text = $"Black score: {PlayerOneScore}\nWhite score: {PlayerTwoScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}\n Current move:";
             OnSideChange += TileManager_OnSideChange;
             OnMovePerformed += TileManager_OnMovePerformed;
             movements = CalculatePossibleMovements(false);
@@ -58,21 +65,56 @@ namespace Reversi
         private void TileManager_OnMovePerformed(object sender, EventArgs e)
         {
             Movement movement = (sender as Movement);
-            if (!movement.Side)
+            if (!movement.Side )
             {
                 PlayerOneScore += movement.Score();
-                PlayerOneScore *= PlayerOneScore;
             }
             else if (!_singleplayer)
             {
                 PlayerTwoScore += movement.Score();
-                PlayerTwoScore *= PlayerOneScore;
             }
+            if (_singleplayer)
+                scoreText._text = $"Black score: {PlayerOneScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}\nCurrent move:";
+            else
+                scoreText._text = $"Black score: {PlayerOneScore}\nWhite score: {PlayerTwoScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}\n Current move:";
         }
 
         private void TileManager_OnSideChange(object sender, EventArgs e)
         {
             movements = CalculatePossibleMovements(CurrentSide);
+            if(movements.Count == 0)
+            {
+                if(_singleplayer)
+                {
+                    if(CountTiles(false) > CountTiles(true))//player win
+                    {
+
+                    }
+                    else if(CountTiles(false) == CountTiles(true))
+                    {
+                        //draw
+                    }
+                    else
+                    {
+                        //playerlose
+                    }
+                }
+                else
+                {
+                    if (CountTiles(false) > CountTiles(true))//black win
+                    {
+
+                    }
+                    else if (CountTiles(false) == CountTiles(true))
+                    {
+                        //draw
+                    }
+                    else
+                    {
+                        //white win
+                    }
+                }
+            }
         }
 
         private void Tile_OnMouseOver(object sender, EventArgs e)
@@ -133,13 +175,24 @@ namespace Reversi
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            scoreText.Draw(spriteBatch);
             foreach (List<Tile> tilei in tiles)
                 foreach (Tile tile in tilei)
                     tile.Draw(spriteBatch);
         }
 
+        public int CountTiles(bool side)
+        {
+            int i = 0;
+            foreach (List<Tile> tilelist in tiles)
+                foreach (Tile tile in tilelist.Where(x => x.Side == side && x.Visible))
+                    i++;
+            return i;
+        }
+
         public void Update(GameTime gameTime)
         {
+            scoreText.Update(gameTime);
             if(CurrentSide && _singleplayer)
             {
 

@@ -20,10 +20,11 @@ namespace Reversi
             } get { return _side; } }
         private bool _side;
         public bool Visible = false;
+        private bool _hideBackground;
         public Color DrawingColor { set { tileSprite.DrawingColor = value; } }
         private Basic2D tileSprite, diskSprite;
         public event EventHandler OnTilePressed, OnMouseOver, OnMouseOut;
-        public Tile(bool side, bool visible, Vector2 position, Vector2 dimensions)
+        public Tile(bool side, bool visible, Vector2 position, Vector2 dimensions, bool hideBackground = false)
         {
             Position = position;
             tileSprite = new Basic2D("Game/Tile", position, dimensions);
@@ -33,8 +34,7 @@ namespace Reversi
             tileSprite.OnPressed += TileSprite_OnPressed;
             tileSprite.OnMouseOver += TileSprite_OnMouseOver;
             tileSprite.OnMouseOut += TileSprite_OnMouseOut;
-
-
+            _hideBackground = hideBackground;
         }
 
         private void TileSprite_OnPressed(object sender, EventArgs e)
@@ -58,10 +58,10 @@ namespace Reversi
             diskSprite.Update(gameTime);
         }
 
-
         public void Draw(SpriteBatch spriteBatch)
         {
-             tileSprite.Draw(spriteBatch);
+            if(!_hideBackground)
+                tileSprite.Draw(spriteBatch);
             if(Visible)
                 diskSprite.Draw(spriteBatch);
         }
