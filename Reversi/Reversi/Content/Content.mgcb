@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Game/BackgroundImage.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Game/BackgroundImage.png
+
 #begin Game/Disk.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -36,6 +48,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Game/Tile.png
+
+#begin MenuFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MenuFont.spritefont
 
 #begin SplashScreen/SplashImage.png
 /importer:TextureImporter
@@ -61,10 +80,10 @@
 /processorParam:TextureFormat=Color
 /build:TitleScreen/Button.png
 
-#begin TitleScreen/DefaultFont.spritefont
+#begin TitleScreen/CreditsFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:TitleScreen/DefaultFont.spritefont
+/build:TitleScreen/CreditsFont.spritefont
 

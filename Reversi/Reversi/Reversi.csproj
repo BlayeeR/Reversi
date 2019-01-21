@@ -41,7 +41,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Menus\PauseMenu.cs" />
     <Compile Include="Movement.cs" />
+    <Compile Include="Screens\SingleplayerScreen.cs" />
+    <Compile Include="Screens\PauseScreen.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileManager.cs" />
     <Compile Include="Globals.cs" />

@@ -13,13 +13,18 @@ namespace Reversi
         public Tile DestinationTile { internal set; get; }
         public List<Tile> TakenTiles { internal set; get; }
         public Tile SourceTile { internal set; get; }
-        public Movement(bool side,Tile sourceTile, Tile destinationTile, List<Tile> takenTiles)
+        public Movement(bool side,Tile sourceTile, Tile destinationTile, List<Tile> takenTiles, bool isPlayer=true)
         {
             Side = side;
             DestinationTile = destinationTile;
             TakenTiles = takenTiles;
             SourceTile = sourceTile;
-            destinationTile.DrawingColor = Color.Gray;
+            if(isPlayer)
+                destinationTile.DrawingColor = Color.DarkGray;
+        }
+        public int Score()
+        {
+            return TakenTiles.Count;
         }
         public void Perform()
         {
