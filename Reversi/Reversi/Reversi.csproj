@@ -46,7 +46,6 @@
     <Compile Include="Score.cs" />
     <Compile Include="ScoreManager.cs" />
     <Compile Include="Screens\LeaderboardsScreen.cs" />
-    <Compile Include="Screens\SingleplayerScreen.cs" />
     <Compile Include="Screens\PauseScreen.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileManager.cs" />
@@ -60,7 +59,7 @@
     <Compile Include="Menu\IMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\MenuManager.cs" />
-    <Compile Include="Screens\MultiplayerScreen.cs" />
+    <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\SplashScreen.cs" />
     <Compile Include="Screens\TitleScreen.cs" />
     <Compile Include="Program.cs" />
