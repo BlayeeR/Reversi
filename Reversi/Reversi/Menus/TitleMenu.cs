@@ -41,12 +41,12 @@ namespace Reversi.Menus
 
         private void SingleplayerButton_OnPressed(object sender, EventArgs e)
         {
-            GameState.GameStateManager.Instance.ChangeScreen(new SingleplayerScreen(_graphicsDevice, _game));
+            GameState.GameStateManager.Instance.ChangeScreen(new GameScreen(_graphicsDevice, _game, true));
         }
 
         private void MultiplayerButton_OnPressed(object sender, EventArgs e)
         {
-            GameState.GameStateManager.Instance.ChangeScreen(new MultiplayerScreen(_graphicsDevice, _game));
+            GameState.GameStateManager.Instance.ChangeScreen(new GameScreen(_graphicsDevice, _game, false));
         }
 
         private void ExitButton_OnPressed(object sender, EventArgs e)

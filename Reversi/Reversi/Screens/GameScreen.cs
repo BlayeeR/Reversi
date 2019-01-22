@@ -11,13 +11,13 @@ using Reversi.Sprites;
 
 namespace Reversi.Screens
 {
-    public class SingleplayerScreen : GameState.GameState
+    public class GameScreen : GameState.GameState
     {
         public TileManager diskManager;
         private Basic2D backgroundImage;
-        public SingleplayerScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
+        public GameScreen(GraphicsDevice graphicsDevice, Game game, bool singlePlayer = true) : base(graphicsDevice, game)
         {
-            diskManager = new TileManager(new Vector2(90), new Vector2(667), true);
+            diskManager = new TileManager(new Vector2(90), new Vector2(667), singlePlayer);
             backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameState.GameStateManager.Instance.Dimensions.X/2, GameState.GameStateManager.Instance.Dimensions.Y/2), GameState.GameStateManager.Instance.Dimensions);
             
         }
