@@ -14,7 +14,7 @@ namespace Reversi.Menus
 {
     public class TitleMenu : Menu.Menu
     {
-        Button2D exitButton, multiplayerButton, singleplayerButton;
+        Button2D exitButton, multiplayerButton, singleplayerButton, leaderboardsButton;
         public TitleMenu(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
             singleplayerButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Singleplayer", "MenuFont");
@@ -23,13 +23,20 @@ namespace Reversi.Menus
             multiplayerButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Multiplayer", "MenuFont");
             multiplayerButton.OnPressed += MultiplayerButton_OnPressed;
             Items.Add(multiplayerButton);
-            Items.Add(new Button2D("TitleScreen/Button", Vector2.Zero, "Leaderboards", "MenuFont"));
+            leaderboardsButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Leaderboards", "MenuFont");
+            Items.Add(leaderboardsButton);
+            leaderboardsButton.OnPressed += LeaderboardsButton_OnPressed;
             exitButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Exit", "MenuFont");
             exitButton.OnPressed += ExitButton_OnPressed;
             Items.Add(exitButton);
             Axis = "Y";
             _game = game;
             _graphicsDevice = graphicsDevice;
+        }
+
+        private void LeaderboardsButton_OnPressed(object sender, EventArgs e)
+        {
+            GameState.GameStateManager.Instance.AddScreen(new LeaderboardsScreen(_graphicsDevice, _game));
         }
 
         private void SingleplayerButton_OnPressed(object sender, EventArgs e)

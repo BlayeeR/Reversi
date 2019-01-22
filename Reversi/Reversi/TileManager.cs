@@ -20,7 +20,8 @@ namespace Reversi
         private Button2D scoreText;
         private bool _currentSide, _singleplayer = false;
         private double aiMovementDelay = 0;
-        public int PlayerOneScore = 0, PlayerTwoScore = 0, previousMovements = 0;
+        public int previousMovements = 0;
+        public Score[] score = new Score[2] { new Score("", 0), new Score("", 0) };
         private bool CurrentSide { set { _currentSide = value;//false player1, true ai/player2
                 OnSideChange(this, null);
             } get { return _currentSide; } }
@@ -54,9 +55,9 @@ namespace Reversi
             scoreText = new Button2D("TitleScreen/Button", new Vector2(225, 850), $"", "TitleScreen/CreditsFont");
             scoreText.UnselectedFontColor = Color.Black;
             if (_singleplayer)
-                scoreText._text = $"Player score: {PlayerOneScore}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
+                scoreText._text = $"Player score: {score[0].Value}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
             else
-                scoreText._text = $"Black score: {PlayerOneScore}\nWhite score: {PlayerTwoScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
+                scoreText._text = $"Black score: {score[0].Value}\nWhite score: {score[1].Value}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
             OnSideChange += TileManager_OnSideChange;
             OnMovePerformed += TileManager_OnMovePerformed;
             movements = CalculatePossibleMovements(false);
@@ -67,16 +68,16 @@ namespace Reversi
             Movement movement = (sender as Movement);
             if (!movement.Side )
             {
-                PlayerOneScore += movement.Score();
+                score[0].Value += movement.Score();
             }
             else if (!_singleplayer)
             {
-                PlayerTwoScore += movement.Score();
+                score[1].Value += movement.Score();
             }
             if (_singleplayer)
-                scoreText._text = $"Player score: {PlayerOneScore}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
+                scoreText._text = $"Player score: {score[0].Value}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
             else
-                scoreText._text = $"Black score: {PlayerOneScore}\nWhite score: {PlayerTwoScore}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
+                scoreText._text = $"Black score: {score[0].Value}\nWhite score: {score[1].Value}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
         }
 
         private void TileManager_OnSideChange(object sender, EventArgs e)
@@ -91,10 +92,11 @@ namespace Reversi
                     {
                         if (CountTiles(false) > CountTiles(true))//player win
                         {
-
+                            //show ending screen
                         }
                         else if (CountTiles(false) == CountTiles(true))
                         {
+                            //show ending screen
                             //draw
                         }
                         else
