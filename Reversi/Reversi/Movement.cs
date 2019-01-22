@@ -9,10 +9,10 @@ namespace Reversi
 {
     public class Movement
     {
-        public bool Side { internal set; get; }
-        public Tile DestinationTile { internal set; get; }
-        public List<Tile> TakenTiles { internal set; get; }
-        public Tile SourceTile { internal set; get; }
+        public bool Side { private set; get; }
+        public Tile DestinationTile { private set; get; }
+        public List<Tile> TakenTiles { private set; get; }
+        public Tile SourceTile { private set; get; }
         public Movement(bool side,Tile sourceTile, Tile destinationTile, List<Tile> takenTiles, bool isPlayer=true)
         {
             Side = side;

@@ -11,7 +11,7 @@ namespace Reversi
 {
     public class Tile 
     {
-        public Vector2 Position { internal set; get; }
+        public Vector2 Position { private set; get; }
         public bool Side { set { _side = value;
                 if (_side)
                     diskSprite.DrawingColor = Color.White;
