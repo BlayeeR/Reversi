@@ -15,25 +15,25 @@ namespace Reversi.Sprites
     public class Basic2D : Sprite
     {
         public Vector2 Position, Dimensions;
-        private Texture2D _texture;
+        private Texture2D texture;
         public virtual event EventHandler OnMouseOver, OnMouseOut, OnPressed;
         private bool mouseOverOldState=false;
         private MouseState oldMouseState, currentMouseState;
         public bool IsActive=false;
         public Color DrawingColor = Color.White;
-        private string _path;
+        private string path;
 
         public Basic2D(string path, Vector2 position, Vector2 dimensions) :  this()
         {
             Position = position;
-            _path = path;
+            this.path = path;
             Dimensions = dimensions;
         }
 
         public Basic2D(string path, Vector2 position) : this()
         {
             Position = position;
-            _path = path;
+            this.path = path;
             Dimensions = Vector2.Zero;
         }
 
@@ -62,16 +62,16 @@ namespace Reversi.Sprites
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (_texture != null)
+            if (texture != null)
             {
-                spriteBatch.Draw(_texture, new Rectangle((Position).ToPoint(), Dimensions.ToPoint()), null, DrawingColor, 0.0f, new Vector2(_texture.Bounds.Width / 2, _texture.Bounds.Height / 2), SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, new Rectangle((Position).ToPoint(), Dimensions.ToPoint()), null, DrawingColor, 0.0f, new Vector2(texture.Bounds.Width / 2, texture.Bounds.Height / 2), SpriteEffects.None, 0);
             }
         }
 
         public override void LoadContent(ContentManager content)
         {
-            _texture = content.Load<Texture2D>(_path);
-            Dimensions = Dimensions==Vector2.Zero?new Vector2(_texture.Width, _texture.Height):Dimensions;
+            texture = content.Load<Texture2D>(path);
+            Dimensions = Dimensions==Vector2.Zero?new Vector2(texture.Width, texture.Height):Dimensions;
         }
 
         public override void Update(GameTime gameTime)

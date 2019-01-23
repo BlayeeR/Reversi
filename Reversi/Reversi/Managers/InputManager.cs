@@ -9,8 +9,8 @@ namespace Reversi.Managers
 {
     public class InputManager
     {
-        KeyboardState currentKeyState, prevKeyState;
-        MouseState currentMouseState, prevMouseState;
+        private KeyboardState currentKeyState, previousKeyState;
+        private MouseState currentMouseState, previousMouseState;
 
         private static InputManager instance;
 
@@ -27,15 +27,15 @@ namespace Reversi.Managers
 
         public void Update()
         {
-            prevKeyState = currentKeyState;
+            previousKeyState = currentKeyState;
             currentKeyState = Keyboard.GetState();
-            prevMouseState = currentMouseState;
+            previousMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
         }
 
         public bool LMBPressed()
         {
-            if (currentMouseState.LeftButton == ButtonState.Released && prevMouseState.LeftButton == ButtonState.Pressed)
+            if (currentMouseState.LeftButton == ButtonState.Released && previousMouseState.LeftButton == ButtonState.Pressed)
                 return true;
             return false;
         }
@@ -46,7 +46,7 @@ namespace Reversi.Managers
         {
             foreach (Keys key in keys)
             {
-                if (currentKeyState.IsKeyDown(key) && prevKeyState.IsKeyUp(key))
+                if (currentKeyState.IsKeyDown(key) && previousKeyState.IsKeyUp(key))
                     return true;
             }
             return false;
@@ -56,7 +56,7 @@ namespace Reversi.Managers
         {
             foreach (Keys key in keys)
             {
-                if (currentKeyState.IsKeyUp(key) && prevKeyState.IsKeyDown(key))
+                if (currentKeyState.IsKeyUp(key) && previousKeyState.IsKeyDown(key))
                     return true;
             }
             return false;

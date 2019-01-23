@@ -15,19 +15,19 @@ namespace Reversi.Screens
 {
     public class SplashScreen : GameState
     {
-        Basic2D SplashImage;
+        private Basic2D splashImage;
 
         public SplashScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
-            _graphicsDevice = graphicsDevice;
-            SplashImage = new Basic2D("SplashScreen/SplashImage", new Vector2(100, 120));
+            base.graphicsDevice = graphicsDevice;
+            splashImage = new Basic2D("SplashScreen/SplashImage", new Vector2(100, 120));
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _graphicsDevice.Clear(Color.Black);
+            graphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-            SplashImage.Draw(spriteBatch);
+            splashImage.Draw(spriteBatch);
             spriteBatch.End();
         }
 
@@ -38,7 +38,7 @@ namespace Reversi.Screens
 
         public override void LoadContent(ContentManager content)
         {
-            SplashImage.LoadContent(content);
+            splashImage.LoadContent(content);
         }
 
         public override void UnloadContent()
@@ -50,7 +50,7 @@ namespace Reversi.Screens
         {
             if (InputManager.Instance.KeyPressed(Keys.Enter))
             {
-                GameStateManager.Instance.ChangeScreen(new TitleScreen(_graphicsDevice, _game));
+                GameStateManager.Instance.ChangeScreen(new TitleScreen(graphicsDevice, game));
             }
         }
     }

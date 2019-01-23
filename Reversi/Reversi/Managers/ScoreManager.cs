@@ -10,7 +10,7 @@ namespace Reversi.Managers
 {
     public class ScoreManager
     {
-        private static string _fileName = "scores.xml"; 
+        private static string filename = "scores.xml"; 
         public List<Score> Scores { get; private set; }
         public ScoreManager()
           : this(new List<Score>())
@@ -28,10 +28,10 @@ namespace Reversi.Managers
         }
         public static ScoreManager Load()
         {
-            if (!File.Exists(_fileName))
+            if (!File.Exists(filename))
                 return new ScoreManager();
 
-            using (var reader = new StreamReader(new FileStream(_fileName, FileMode.Open)))
+            using (var reader = new StreamReader(new FileStream(filename, FileMode.Open)))
             {
                 var serilizer = new XmlSerializer(typeof(List<Score>));
                 var scores = (List<Score>)serilizer.Deserialize(reader);
@@ -42,7 +42,7 @@ namespace Reversi.Managers
         public static void Save(ScoreManager scoreManager)
         {
             // Overrides the file if it alreadt exists
-            using (var writer = new StreamWriter(new FileStream(_fileName, FileMode.Create)))
+            using (var writer = new StreamWriter(new FileStream(filename, FileMode.Create)))
             {
                 var serilizer = new XmlSerializer(typeof(List<Score>));
 

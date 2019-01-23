@@ -20,8 +20,8 @@ namespace Reversi.Menus
         public TitleMenu(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
             Axis = "Y";
-            _game = game;
-            _graphicsDevice = graphicsDevice;
+            base.game = game;
+            base.graphicsDevice = graphicsDevice;
             singleplayerButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Singleplayer", "MenuFont");
             singleplayerButton.OnPressed += SingleplayerButton_OnPressed;
             multiplayerButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Multiplayer", "MenuFont");
@@ -34,22 +34,22 @@ namespace Reversi.Menus
 
         private void LeaderboardsButton_OnPressed(object sender, EventArgs e)
         {
-            GameStateManager.Instance.AddScreen(new LeaderboardsScreen(_graphicsDevice, _game));
+            GameStateManager.Instance.AddScreen(new LeaderboardsScreen(graphicsDevice, game));
         }
 
         private void SingleplayerButton_OnPressed(object sender, EventArgs e)
         {
-            GameStateManager.Instance.ChangeScreen(new GameScreen(_graphicsDevice, _game, true));
+            GameStateManager.Instance.ChangeScreen(new GameScreen(graphicsDevice, game, true));
         }
 
         private void MultiplayerButton_OnPressed(object sender, EventArgs e)
         {
-            GameStateManager.Instance.ChangeScreen(new GameScreen(_graphicsDevice, _game, false));
+            GameStateManager.Instance.ChangeScreen(new GameScreen(graphicsDevice, game, false));
         }
 
         private void ExitButton_OnPressed(object sender, EventArgs e)
         {
-            _game.Exit();
+            game.Exit();
         }
 
         public override void LoadContent(ContentManager content)

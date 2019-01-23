@@ -15,24 +15,23 @@ namespace Reversi.Managers
     public class TileManager
     {
         List<List<Tile>> tiles;
-        private Vector2 _gameBoardPosition, _gameBoardDimensions;
-        private int boardSize = 8;
-        List<Movement> movements;
+        private Vector2 gameBoardPosition, gameBoardDimensions;
+        private int boardSize = 8, previousMovements;
+        private List<Movement> _movements;
         private event EventHandler OnSideChange, OnMovePerformed;
         public event EventHandler OnGameEnded;
         private Text2D scoreText;
-        private bool _currentSide, _singleplayer = false;
+        private bool currentSide, singleplayer = false;
         private double aiMovementDelay = 0;
-        public int previousMovements = 0;
-        public Score[] score = new Score[2];
-        private bool CurrentSide { set { _currentSide = value;//false player1, true ai/player2
+        private Score[] score = new Score[2];
+        private bool CurrentSide { set { currentSide = value;//false player1, true ai/player2
                 OnSideChange(this, null);
-            } get { return _currentSide; } }
+            } get { return currentSide; } }
         public TileManager(Vector2 gameBoardPosition, Vector2 gameBoardDimensions, bool singleplayer, ContentManager content)
         {
-            _singleplayer = singleplayer;
-            _gameBoardPosition = gameBoardPosition;
-            _gameBoardDimensions = gameBoardDimensions;
+            this.singleplayer = singleplayer;
+            this.gameBoardPosition = gameBoardPosition;
+            this.gameBoardDimensions = gameBoardDimensions;
             tiles = new List<List<Tile>>();
             score[0] = new Score() { PlayerName = "", Value = 0 };
             score[1] = new Score() { PlayerName = "", Value = 0 };
@@ -48,11 +47,11 @@ namespace Reversi.Managers
             {
                 score[0].Value += movement.Score();
             }
-            else if (!_singleplayer)
+            else if (!singleplayer)
             {
                 score[1].Value += movement.Score();
             }
-            if (_singleplayer)
+            if (singleplayer)
                 scoreText.Text = $"Player score: {score[0].Value}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
             else
                 scoreText.Text = $"Black score: {score[0].Value}\nWhite score: {score[1].Value}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
@@ -60,13 +59,13 @@ namespace Reversi.Managers
 
         public void LoadContent(ContentManager content)
         {
-            Vector2 tileSize = new Vector2(_gameBoardDimensions.X / boardSize * 0.96f);
+            Vector2 tileSize = new Vector2(gameBoardDimensions.X / boardSize * 0.96f);
             for (int i = 0; i < boardSize; i++)
             {
                 List<Tile> tempTiles = new List<Tile>();
                 for (int j = 0; j < boardSize; j++)
                 {
-                    Tile tile = new Tile(true, false, new Vector2(_gameBoardPosition.X + 0.02f * _gameBoardDimensions.X + j * tileSize.X + tileSize.X / 2, _gameBoardPosition.Y + 0.02f * _gameBoardDimensions.Y + i * tileSize.Y + tileSize.Y / 2), tileSize);
+                    Tile tile = new Tile(true, false, new Vector2(gameBoardPosition.X + 0.02f * gameBoardDimensions.X + j * tileSize.X + tileSize.X / 2, gameBoardPosition.Y + 0.02f * gameBoardDimensions.Y + i * tileSize.Y + tileSize.Y / 2), tileSize);
                     tile.LoadContent(content);
                     tile.OnTilePressed += Tile_OnTilePressed;
                     tile.OnMouseOut += Tile_OnMouseOut;
@@ -83,18 +82,18 @@ namespace Reversi.Managers
             tiles[(int)boardSize / 2][(int)boardSize / 2 - 1].Visible = true;
             tiles[(int)boardSize / 2][(int)boardSize / 2 - 1].ChangeSide();
             scoreText.LoadContent(content);
-            if (_singleplayer)
+            if (singleplayer)
                 scoreText.Text = $"Player score: {score[0].Value}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
             else
                 scoreText.Text = $"Black score: {score[0].Value}\nWhite score: {score[1].Value}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
-            movements = CalculatePossibleMovements(false);
+            _movements = CalculatePossibleMovements(false);
         }
 
         private void TileManager_OnSideChange(object sender, EventArgs e)
         {
-            previousMovements = movements.Count;
-            movements = CalculatePossibleMovements(CurrentSide);
-            if (movements.Count == 0)
+            previousMovements = _movements.Count;
+            _movements = CalculatePossibleMovements(CurrentSide);
+            if (_movements.Count == 0)
             {
                 if (previousMovements == 0)
                 {
@@ -114,9 +113,9 @@ namespace Reversi.Managers
 
         private void Tile_OnMouseOver(object sender, EventArgs e)
         {
-            if (!_singleplayer || (_singleplayer && !CurrentSide))
+            if (!singleplayer || (singleplayer && !CurrentSide))
             {
-                foreach (Movement movement in movements)
+                foreach (Movement movement in _movements)
                 {
                     if ((sender as Tile).Equals(movement.DestinationTile))
                     {
@@ -133,9 +132,9 @@ namespace Reversi.Managers
 
         private void Tile_OnMouseOut(object sender, EventArgs e)
         {
-            if (!_singleplayer || (_singleplayer && !CurrentSide))
+            if (!singleplayer || (singleplayer && !CurrentSide))
             {
-                foreach (Movement movement in movements)
+                foreach (Movement movement in _movements)
                 {
                     if ((sender as Tile).Equals(movement.DestinationTile))
                     {
@@ -151,15 +150,15 @@ namespace Reversi.Managers
 
         private void Tile_OnTilePressed(object sender, EventArgs e)
         {
-            if (!_singleplayer||(_singleplayer&&!CurrentSide))
+            if (!singleplayer||(singleplayer&&!CurrentSide))
             {
                 bool performed = false;
-                for (int i = 0; i < movements.Count; i++)
+                for (int i = 0; i < _movements.Count; i++)
                 {
-                    if ((sender as Tile).Equals(movements[i].DestinationTile))
+                    if ((sender as Tile).Equals(_movements[i].DestinationTile))
                     {
-                        movements[i].Perform();
-                        OnMovePerformed(movements[i], null);
+                        _movements[i].Perform();
+                        OnMovePerformed(_movements[i], null);
                         performed = true;
                     }
                 }
@@ -188,7 +187,7 @@ namespace Reversi.Managers
         public void Update(GameTime gameTime)
         {
             scoreText.Update(gameTime);
-            if(CurrentSide && _singleplayer)
+            if(CurrentSide && singleplayer)
             {
 
                 aiMovementDelay += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -249,7 +248,7 @@ namespace Reversi.Managers
                                 if (!tile.Equals(takenTiles.Last()))
                                 {
                                     //new Movement(side, takenTiles.First(), takenTiles.Last(), takenTiles.Where(a => !a.Equals(takenTiles.First())).Where(b => !b.Equals(takenTiles.Last())).ToList());
-                                    movements.Add(new Movement(side, takenTiles.First(), tiles[x][y], takenTiles.Where(a => !a.Equals(takenTiles.First())).ToList(), _singleplayer?(CurrentSide?false:true):true));
+                                    movements.Add(new Movement(side, takenTiles.First(), tiles[x][y], takenTiles.Where(a => !a.Equals(takenTiles.First())).ToList(), singleplayer?(CurrentSide?false:true):true));
                                 }
                                 break;
                             }

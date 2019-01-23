@@ -12,22 +12,22 @@ namespace Reversi.Managers
 {
     public class MenuManager
     {
-        private Stack<MenuModel> _menus = new Stack<MenuModel>();
-        private ContentManager _content;
+        private Stack<MenuModel> menus = new Stack<MenuModel>();
+        private ContentManager content;
 
         public void LoadContent(ContentManager content)
         {
-            _content = content;
+            this.content = content;
         }
         public void AddMenu(MenuModel menu)
         {
             try
             {
-                _menus.Push(menu);
+                menus.Push(menu);
                 //_menus.Peek().Initialize();
-                if (_content != null)
+                if (content != null)
                 {
-                    _menus.Peek().LoadContent();
+                    menus.Peek().LoadContent();
                 }
             }
 #pragma warning disable CS0168 // Variable is declared but never used
@@ -40,12 +40,12 @@ namespace Reversi.Managers
 
         public void RemoveMenu()
         {
-            if (_menus.Count > 0)
+            if (menus.Count > 0)
             {
                 try
                 {
-                    var menu = _menus.Peek();
-                    _menus.Pop();
+                    var menu = menus.Peek();
+                    menus.Pop();
                 }
 #pragma warning disable CS0168 // Variable is declared but never used
                 catch (Exception ex)
@@ -58,9 +58,9 @@ namespace Reversi.Managers
 
         public void ClearMenus()
         {
-            while (_menus.Count > 0)
+            while (menus.Count > 0)
             {
-                _menus.Pop();
+                menus.Pop();
             }
         }
 
@@ -84,9 +84,9 @@ namespace Reversi.Managers
         {
             try
             {
-                if (_menus.Count > 0)
+                if (menus.Count > 0)
                 {
-                    _menus.Peek().Update(gameTime);
+                    menus.Peek().Update(gameTime);
                 }
             }
 #pragma warning disable CS0168 // Variable is declared but never used
@@ -101,9 +101,9 @@ namespace Reversi.Managers
         {
             try
             {
-                if (_menus.Count > 0)
+                if (menus.Count > 0)
                 {
-                    _menus.Peek().Draw(spriteBatch);
+                    menus.Peek().Draw(spriteBatch);
                 }
             }
 #pragma warning disable CS0168 // Variable is declared but never used
