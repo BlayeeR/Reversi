@@ -1,15 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Reversi.Models;
 using System;
 using System.Collections.Generic;
 
-namespace Reversi.GameState
+namespace Reversi.Managers
 {
     public class GameStateManager
     {
         // Instance of the game state manager     
         private static GameStateManager _instance;
+        private ContentManager _content;
         public Vector2 Dimensions { private set; get; }
 
         // Stack for the screens     
@@ -27,6 +29,11 @@ namespace Reversi.GameState
             }
         }
 
+        public void LoadContent(ContentManager content)
+        {
+            _content = content;
+        }
+
         public GameStateManager()
         {
             Dimensions = new Vector2(851, 992);
@@ -42,9 +49,9 @@ namespace Reversi.GameState
                 // Initialize the screen
                 _screens.Peek().Initialize();
                 // Call the LoadContent on the screen
-                if (Globals.Content != null)
+                if (_content != null)
                 {
-                    _screens.Peek().LoadContent(Globals.Content);
+                    _screens.Peek().LoadContent(_content);
                 }
             }
 #pragma warning disable CS0168 // Variable is declared but never used

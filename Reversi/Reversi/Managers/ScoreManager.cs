@@ -6,47 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Reversi
+namespace Reversi.Managers
 {
     public class ScoreManager
     {
-        /*private static string _fileName = "scores.xml";
-        public List<Score> _scores;
-        public List<Score> Scores { get { return _scores.Take(10).ToList(); } private set { _scores = value; } }
-        public ScoreManager()
-        {
-            try
-            {
-                using (var reader = new StreamReader(new FileStream(_fileName, FileMode.Open)))
-                {
-                    var serilizer = new XmlSerializer(typeof(List<Score>));
-                    var scores = (List<Score>)serilizer.Deserialize(reader);
-                    Scores = scores;
-                }
-            }
-            catch
-            {
-                File.Create(_fileName).Close();
-                Scores = new List<Score>();
-            }
-        }
-
-        public void Add(Score score)
-        {
-            Scores.Add(score);
-            Scores = Scores.OrderByDescending(c => c.Value).ToList();
-            
-        }
-
-        public void Save()
-        {
-            using (var writer = new StreamWriter(new FileStream(_fileName, FileMode.Create)))
-            {
-                var serilizer = new XmlSerializer(typeof(List<Score>));
-
-                serilizer.Serialize(writer, Scores);
-            }
-        }*/
         private static string _fileName = "scores.xml"; 
         public List<Score> Scores { get; private set; }
         public ScoreManager()

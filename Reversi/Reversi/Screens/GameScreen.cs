@@ -7,13 +7,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Reversi.Menu;
-using Reversi.Menus;
+using Reversi.Events;
+using Reversi.Managers;
+using Reversi.Models;
 using Reversi.Sprites;
 
 namespace Reversi.Screens
 {
-    public class GameScreen : GameState.GameState
+    public class GameScreen : GameState
     {
         public TileManager tileManager;
         private Basic2D backgroundImage;
@@ -22,13 +23,10 @@ namespace Reversi.Screens
         ScoreManager scoreManager;
         public GameScreen(GraphicsDevice graphicsDevice, Game game, bool singlePlayer = true) : base(graphicsDevice, game)
         {
-            tileManager = new TileManager(new Vector2(90), new Vector2(667), singlePlayer);
-            backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameState.GameStateManager.Instance.Dimensions.X/2, GameState.GameStateManager.Instance.Dimensions.Y/2), GameState.GameStateManager.Instance.Dimensions);
-            tileManager.OnGameEnded += TileManager_OnGameEnded;
             _singlePlayer = singlePlayer;
+            backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameStateManager.Instance.Dimensions.X / 2, GameStateManager.Instance.Dimensions.Y / 2), GameStateManager.Instance.Dimensions);
             Text[0] = new Text2D(new Vector2(430, 350), "", "MenuFont", Color.Black, true, false);
             Text[1] = new Text2D(new Vector2(430, 400), "", "MenuFont", Color.Black, true, false);
-            scoreManager = ScoreManager.Load();
         }
 
         private void TileManager_OnGameEnded(object sender, EventArgs e)
@@ -127,7 +125,13 @@ namespace Reversi.Screens
 
         public override void LoadContent(ContentManager content)
         {
-
+            tileManager = new TileManager(new Vector2(90), new Vector2(667), _singlePlayer, content);
+            tileManager.LoadContent(content);
+            tileManager.OnGameEnded += TileManager_OnGameEnded;
+            scoreManager = ScoreManager.Load();
+            foreach (Text2D text in Text)
+                text.LoadContent(content);
+            backgroundImage.LoadContent(content);
         }
 
         public override void UnloadContent()
@@ -137,7 +141,7 @@ namespace Reversi.Screens
         public override void Update(GameTime gameTime)
         {
             if (InputManager.Instance.KeyPressed(Keys.Escape) && !gameEnded)
-                GameState.GameStateManager.Instance.AddScreen(new PauseScreen(_graphicsDevice, _game));
+                GameStateManager.Instance.AddScreen(new PauseScreen(_graphicsDevice, _game));
             backgroundImage.Update(gameTime);
             if (!gameEnded)
                 tileManager.Update(gameTime);
@@ -146,7 +150,7 @@ namespace Reversi.Screens
                 foreach(Text2D text in Text)
                     text.Update(gameTime);
                 if (InputManager.Instance.KeyPressed(Keys.Enter))
-                    GameState.GameStateManager.Instance.ChangeScreen(new TitleScreen(_graphicsDevice, _game));
+                    GameStateManager.Instance.ChangeScreen(new TitleScreen(_graphicsDevice, _game));
             }
         }
     }

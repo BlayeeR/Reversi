@@ -7,18 +7,20 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Reversi.GameState;
 using Reversi.Sprites;
+using Reversi.Managers;
+using Reversi.Models;
 
 namespace Reversi.Screens
 {
-    public class SplashScreen : GameState.GameState
+    public class SplashScreen : GameState
     {
         Basic2D SplashImage;
 
         public SplashScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
             _graphicsDevice = graphicsDevice;
+            SplashImage = new Basic2D("SplashScreen/SplashImage", new Vector2(100, 120));
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -36,8 +38,7 @@ namespace Reversi.Screens
 
         public override void LoadContent(ContentManager content)
         {
-            SplashImage = new Basic2D("SplashScreen/SplashImage", new Vector2(100,120));
-
+            SplashImage.LoadContent(content);
         }
 
         public override void UnloadContent()

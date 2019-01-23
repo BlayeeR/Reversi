@@ -1,23 +1,31 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Reversi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reversi.Menu
+namespace Reversi.Managers
 {
     public class MenuManager
     {
-        private Stack<Menu> _menus = new Stack<Menu>();
-        public void AddMenu(Menu menu)
+        private Stack<MenuModel> _menus = new Stack<MenuModel>();
+        private ContentManager _content;
+
+        public void LoadContent(ContentManager content)
+        {
+            _content = content;
+        }
+        public void AddMenu(MenuModel menu)
         {
             try
             {
                 _menus.Push(menu);
                 //_menus.Peek().Initialize();
-                if (Globals.Content != null)
+                if (_content != null)
                 {
                     _menus.Peek().LoadContent();
                 }
@@ -56,7 +64,7 @@ namespace Reversi.Menu
             }
         }
 
-        public void ChangeScreen(Menu menu)
+        public void ChangeScreen(MenuModel menu)
         {
             try
             {
@@ -104,10 +112,6 @@ namespace Reversi.Menu
             {
                 // Log the exception
             }
-        }
-
-        public void UnloadContent()
-        {
         }
     }
 }

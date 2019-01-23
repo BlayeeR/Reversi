@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Reversi.GameState;
-using Reversi.Menu;
+using Reversi.Managers;
 using Reversi.Menus;
+using Reversi.Models;
 using Reversi.Sprites;
 
 namespace Reversi.Screens
 {
-    public class TitleScreen : GameState.GameState
+    public class TitleScreen : GameState
     {
         public MenuManager menuManager = new MenuManager();
         public TitleMenu menu;
@@ -23,10 +23,9 @@ namespace Reversi.Screens
         {
             _game = game;
             _graphicsDevice = graphicsDevice;
-            backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameState.GameStateManager.Instance.Dimensions.X / 2, GameState.GameStateManager.Instance.Dimensions.Y / 2), GameState.GameStateManager.Instance.Dimensions);
-            creditsText = new Text2D(new Vector2(225, 850), "Created by\nJakub Olech", "TitleScreen/CreditsFont", Color.Black);
             menu = new TitleMenu(_graphicsDevice, _game);
-            menuManager.AddMenu(menu);
+            backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameStateManager.Instance.Dimensions.X / 2, GameStateManager.Instance.Dimensions.Y / 2), GameStateManager.Instance.Dimensions);
+            creditsText = new Text2D(new Vector2(225, 850), "Created by\nJakub Olech", "TitleScreen/CreditsFont", Color.Black);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -47,7 +46,11 @@ namespace Reversi.Screens
 
         public override void LoadContent(ContentManager content)
         {
-
+            backgroundImage.LoadContent(content);
+            creditsText.LoadContent(content);
+            menuManager.LoadContent(content);
+            menu.LoadContent(content);
+            menuManager.AddMenu(menu);
         }
 
         public override void UnloadContent()

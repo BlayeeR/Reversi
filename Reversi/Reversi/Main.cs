@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Reversi.GameState;
+using Reversi.Managers;
 using Reversi.Screens;
 
 namespace Reversi
@@ -18,7 +18,6 @@ namespace Reversi
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            Globals.Content = Content;
         }
 
         /// <summary>
@@ -29,8 +28,8 @@ namespace Reversi
         /// </summary>
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = (int)GameState.GameStateManager.Instance.Dimensions.X;
-            graphics.PreferredBackBufferHeight = (int)GameState.GameStateManager.Instance.Dimensions.Y;
+            graphics.PreferredBackBufferWidth = (int)GameStateManager.Instance.Dimensions.X;
+            graphics.PreferredBackBufferHeight = (int)GameStateManager.Instance.Dimensions.Y;
             graphics.ApplyChanges();
             
             base.Initialize();
@@ -46,7 +45,8 @@ namespace Reversi
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            GameState.GameStateManager.Instance.AddScreen(new SplashScreen(GraphicsDevice, this));
+            GameStateManager.Instance.LoadContent(Content);
+            GameStateManager.Instance.AddScreen(new SplashScreen(GraphicsDevice, this));
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Reversi
         /// </summary>
         protected override void UnloadContent()
         {
-            GameState.GameStateManager.Instance.UnloadContent();
+            GameStateManager.Instance.UnloadContent();
         }
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace Reversi
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {
-            GameState.GameStateManager.Instance.Update(gameTime);
+        { 
+            GameStateManager.Instance.Update(gameTime);
             InputManager.Instance.Update();
             base.Update(gameTime);
         }
@@ -78,7 +78,7 @@ namespace Reversi
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            GameState.GameStateManager.Instance.Draw(spriteBatch);
+            GameStateManager.Instance.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }

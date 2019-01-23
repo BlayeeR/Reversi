@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Reversi.Interfaces;
 using System;
 using System.Xml.Serialization;
 
-namespace Reversi.GameState
+namespace Reversi.Models
 {
     public abstract class GameState : IGameState
     {

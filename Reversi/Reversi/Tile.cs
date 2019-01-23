@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Reversi.Sprites;
 
@@ -64,6 +65,12 @@ namespace Reversi
                 tileSprite.Draw(spriteBatch);
             if(Visible)
                 diskSprite.Draw(spriteBatch);
+        }
+
+        public void LoadContent(ContentManager content)
+        {
+            tileSprite.LoadContent(content);
+            diskSprite.LoadContent(content);
         }
 
         public void ChangeSide()

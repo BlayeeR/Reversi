@@ -7,14 +7,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Reversi.GameState;
-using Reversi.Menu;
+using Reversi.Managers;
 using Reversi.Menus;
+using Reversi.Models;
 using Reversi.Sprites;
 
 namespace Reversi.Screens
 {
-    public class LeaderboardsScreen : GameState.GameState
+    public class LeaderboardsScreen : GameState
     {
         private Basic2D backgroundImage;
         private Text2D creditsText, highscoresText;
@@ -23,15 +23,10 @@ namespace Reversi.Screens
         {
             _game = game;
             _graphicsDevice = graphicsDevice;
-            backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameState.GameStateManager.Instance.Dimensions.X / 2, GameState.GameStateManager.Instance.Dimensions.Y / 2), GameState.GameStateManager.Instance.Dimensions);
+            scoreManager = ScoreManager.Load();
+            backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameStateManager.Instance.Dimensions.X / 2, GameStateManager.Instance.Dimensions.Y / 2), GameStateManager.Instance.Dimensions);
             creditsText = new Text2D(new Vector2(225, 850), "Created by\nJakub Olech", "TitleScreen/CreditsFont", Color.Black);
             highscoresText = new Text2D(new Vector2(120, 110), "High scores:\n", "MenuFont", new Color(122, 54, 6), false, false);
-            scoreManager = ScoreManager.Load();
-            foreach (Score score in scoreManager.Scores)
-            {
-                highscoresText.Text += $"{scoreManager.Scores.IndexOf(score) + 1}: {score.PlayerName}- {score.Value}\n";
-            }
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -52,7 +47,13 @@ namespace Reversi.Screens
 
         public override void LoadContent(ContentManager content)
         {
-
+            backgroundImage.LoadContent(content);
+            creditsText.LoadContent(content);
+            highscoresText.LoadContent(content);
+            foreach (Score score in scoreManager.Scores)
+            {
+                highscoresText.Text += $"{scoreManager.Scores.IndexOf(score) + 1}: {score.PlayerName}- {score.Value}\n";
+            }
         }
 
         public override void UnloadContent()
@@ -63,7 +64,7 @@ namespace Reversi.Screens
         public override void Update(GameTime gameTime)
         {
             if (InputManager.Instance.KeyPressed(Keys.Escape))
-                GameState.GameStateManager.Instance.RemoveScreen();
+                GameStateManager.Instance.RemoveScreen();
             backgroundImage.Update(gameTime);
             creditsText.Update(gameTime);
             highscoresText.Update(gameTime);

@@ -7,10 +7,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Reversi.Sprites;
+using Reversi.Managers;
+using Reversi.Interfaces;
+using Microsoft.Xna.Framework.Content;
 
-namespace Reversi.Menu
+namespace Reversi.Models
 {
-    public abstract class Menu : IMenu
+    public abstract class MenuModel : IMenu
     {
         public string Axis;
         public List<Button2D> Items;
@@ -18,8 +21,9 @@ namespace Reversi.Menu
         int itemNumber;
         protected Game _game;
         protected GraphicsDevice _graphicsDevice;
+        private ContentManager _content;
 
-        public Menu(GraphicsDevice graphicsDevice, Game game)
+        public MenuModel(GraphicsDevice graphicsDevice, Game game)
         {
             _game = game;
             _graphicsDevice = graphicsDevice;
@@ -34,13 +38,13 @@ namespace Reversi.Menu
             Vector2 dimensions = Vector2.Zero;
             foreach (Button2D button in Items)
                 dimensions += button.Dimensions ;
-            dimensions = new Vector2((GameState.GameStateManager.Instance.Dimensions.X - dimensions.X) / 2, (GameState.GameStateManager.Instance.Dimensions.Y - dimensions.Y) / 2);
+            dimensions = new Vector2((GameStateManager.Instance.Dimensions.X - dimensions.X) / 2, (GameStateManager.Instance.Dimensions.Y - dimensions.Y) / 2);
             foreach (Button2D button in Items)
             {
                 if (Axis == "X")
-                    button.Position = new Vector2(dimensions.X, (GameState.GameStateManager.Instance.Dimensions.Y - button.Dimensions.Y) / 2);
+                    button.Position = new Vector2(dimensions.X, (GameStateManager.Instance.Dimensions.Y - button.Dimensions.Y) / 2);
                 else if (Axis == "Y")
-                    button.Position = new Vector2((GameState.GameStateManager.Instance.Dimensions.X ) / 2, dimensions.Y);
+                    button.Position = new Vector2((GameStateManager.Instance.Dimensions.X ) / 2, dimensions.Y);
                 dimensions += button.Dimensions;
             }
         }
@@ -87,5 +91,7 @@ namespace Reversi.Menu
                 Items[i].Update(gameTime);
             }
         }
+
+        public abstract void LoadContent(ContentManager content);
     }
 }
