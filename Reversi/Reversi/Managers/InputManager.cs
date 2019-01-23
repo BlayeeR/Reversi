@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,11 @@ namespace Reversi.Managers
                     return true;
             }
             return false;
+        }
+
+        public Vector2 MousePosition()
+        {
+            return currentMouseState.Position.ToVector2();
         }
     }
 }

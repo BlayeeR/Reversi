@@ -18,7 +18,6 @@ namespace Reversi.Sprites
         private Texture2D texture;
         public virtual event EventHandler OnMouseOver, OnMouseOut, OnPressed;
         private bool mouseOverOldState=false;
-        private MouseState oldMouseState, currentMouseState;
         public bool IsActive=false;
         public Color DrawingColor = Color.White;
         private string path;
@@ -76,9 +75,7 @@ namespace Reversi.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            oldMouseState = currentMouseState;
-            currentMouseState = Mouse.GetState();
-            Vector2 mousePosition = new Vector2(InputManager.Instance.MouseState().Position.X, InputManager.Instance.MouseState().Position.Y);
+            Vector2 mousePosition = InputManager.Instance.MousePosition();
             if (mousePosition.X > Position.X - Dimensions.X / 2 && mousePosition.Y > Position.Y - Dimensions.Y / 2 && mousePosition.X < Position.X + Dimensions.X / 2 && mousePosition.Y < Position.Y + Dimensions.Y / 2)
             {
                 if (InputManager.Instance.LMBPressed())
