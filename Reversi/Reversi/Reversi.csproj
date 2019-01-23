@@ -48,6 +48,7 @@
     <Compile Include="ScoreManager.cs" />
     <Compile Include="Screens\LeaderboardsScreen.cs" />
     <Compile Include="Screens\PauseScreen.cs" />
+    <Compile Include="Sprites\Text2D.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileManager.cs" />
     <Compile Include="Globals.cs" />

@@ -18,7 +18,7 @@ namespace Reversi.Screens
         public TileManager tileManager;
         private Basic2D backgroundImage;
         private bool gameEnded = false, _singlePlayer;
-        private Button2D[] Text = new Button2D[2];
+        private Text2D[] Text = new Text2D[2];
         ScoreManager scoreManager;
         public GameScreen(GraphicsDevice graphicsDevice, Game game, bool singlePlayer = true) : base(graphicsDevice, game)
         {
@@ -26,8 +26,8 @@ namespace Reversi.Screens
             backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameState.GameStateManager.Instance.Dimensions.X/2, GameState.GameStateManager.Instance.Dimensions.Y/2), GameState.GameStateManager.Instance.Dimensions);
             tileManager.OnGameEnded += TileManager_OnGameEnded;
             _singlePlayer = singlePlayer;
-            Text[0] = new Button2D("TitleScreen/Button", new Vector2(430, 350), "", "MenuFont", true, false);
-            Text[1] = new Button2D("TitleScreen/Button", new Vector2(430, 400), "", "MenuFont", true, false);
+            Text[0] = new Text2D(new Vector2(430, 350), "", "MenuFont", Color.Black, true, false);
+            Text[1] = new Text2D(new Vector2(430, 400), "", "MenuFont", Color.Black, true, false);
             scoreManager = ScoreManager.Load();
         }
 
@@ -39,22 +39,22 @@ namespace Reversi.Screens
                 case -1:
                     {
                         if (_singlePlayer)
-                            Text[0]._text = "You win!";
+                            Text[0].Text = "You win!";
                         else
-                            Text[0]._text = "Black wins!";
+                            Text[0].Text = "Black wins!";
                         break;
                     }
                 case 0:
                     {
-                        Text[0]._text = "Draw!";
+                        Text[0].Text = "Draw!";
                         break;
                     }
                 case 1:
                     {
                         if (_singlePlayer)
-                            Text[0]._text = "You lose!";
+                            Text[0].Text = "You lose!";
                         else
-                            Text[0]._text = "White wins!";
+                            Text[0].Text = "White wins!";
                         break;
                     }
             }
@@ -62,7 +62,7 @@ namespace Reversi.Screens
             {
                 if (gameEndedEventArgs.Scores[0].Value > scoreManager.Scores.LastOrDefault().Value && gameEndedEventArgs.Scores[1].Value > scoreManager.Scores.LastOrDefault().Value)
                 {
-                    Text[1]._text += $"New high scores: {gameEndedEventArgs.Scores[0].Value}, {gameEndedEventArgs.Scores[1].Value}";
+                    Text[1].Text += $"New high scores: {gameEndedEventArgs.Scores[0].Value}, {gameEndedEventArgs.Scores[1].Value}";
                     gameEndedEventArgs.Scores[0].PlayerName = DateTime.Now.ToString();
                     gameEndedEventArgs.Scores[1].PlayerName = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[0]);
@@ -70,13 +70,13 @@ namespace Reversi.Screens
                 }
                 else if (gameEndedEventArgs.Scores[0].Value > scoreManager.Scores.LastOrDefault().Value && gameEndedEventArgs.Scores[0].Value != 0)
                 {
-                    Text[1]._text += $"New high score: {gameEndedEventArgs.Scores[0].Value}";
+                    Text[1].Text += $"New high score: {gameEndedEventArgs.Scores[0].Value}";
                     gameEndedEventArgs.Scores[0].PlayerName = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[0]);
                 }
                 else if (gameEndedEventArgs.Scores[1].Value > scoreManager.Scores.LastOrDefault().Value && gameEndedEventArgs.Scores[1].Value != 0)
                 {
-                    Text[1]._text += $"New high score: {gameEndedEventArgs.Scores[1].Value}";
+                    Text[1].Text += $"New high score: {gameEndedEventArgs.Scores[1].Value}";
                     gameEndedEventArgs.Scores[1].PlayerName = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[1]);
                 }
@@ -85,7 +85,7 @@ namespace Reversi.Screens
             {
                 if (gameEndedEventArgs.Scores[0].Value != 0 && gameEndedEventArgs.Scores[1].Value != 0)
                 {
-                    Text[1]._text += $"New high scores: {gameEndedEventArgs.Scores[0].Value}, {gameEndedEventArgs.Scores[1].Value}";
+                    Text[1].Text += $"New high scores: {gameEndedEventArgs.Scores[0].Value}, {gameEndedEventArgs.Scores[1].Value}";
                     gameEndedEventArgs.Scores[0].PlayerName = DateTime.Now.ToString();
                     gameEndedEventArgs.Scores[1].PlayerName = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[0]);
@@ -93,13 +93,13 @@ namespace Reversi.Screens
                 }
                 else if (gameEndedEventArgs.Scores[0].Value != 0)
                 {
-                    Text[1]._text += $"New high score: {gameEndedEventArgs.Scores[0].Value}";
+                    Text[1].Text += $"New high score: {gameEndedEventArgs.Scores[0].Value}";
                     gameEndedEventArgs.Scores[0].PlayerName = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[0]);
                 }
                 else if (gameEndedEventArgs.Scores[1].Value != 0)
                 {
-                    Text[1]._text += $"New high score: {gameEndedEventArgs.Scores[1].Value}";
+                    Text[1].Text += $"New high score: {gameEndedEventArgs.Scores[1].Value}";
                     gameEndedEventArgs.Scores[1].PlayerName = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[1]);
                 }
@@ -116,7 +116,7 @@ namespace Reversi.Screens
             if (!gameEnded)
                 tileManager.Draw(spriteBatch);
             else
-                foreach (Button2D text in Text)
+                foreach (Text2D text in Text)
                     text.Draw(spriteBatch);
             spriteBatch.End();
         }
@@ -143,7 +143,7 @@ namespace Reversi.Screens
                 tileManager.Update(gameTime);
             else
             {
-                foreach(Button2D text in Text)
+                foreach(Text2D text in Text)
                     text.Update(gameTime);
                 if (InputManager.Instance.KeyPressed(Keys.Enter))
                     GameState.GameStateManager.Instance.ChangeScreen(new TitleScreen(_graphicsDevice, _game));
