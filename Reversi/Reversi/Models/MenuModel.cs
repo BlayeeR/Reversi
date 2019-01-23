@@ -18,15 +18,14 @@ namespace Reversi.Models
         public string Axis;
         public List<Button2D> Items;
         public bool ToLeft = false;
-        int itemNumber;
-        protected Game _game;
-        protected GraphicsDevice _graphicsDevice;
-        private ContentManager _content;
+        private int itemNumber;
+        protected Game game;
+        protected GraphicsDevice graphicsDevice;
 
         public MenuModel(GraphicsDevice graphicsDevice, Game game)
         {
-            _game = game;
-            _graphicsDevice = graphicsDevice;
+            this.game = game;
+            this.graphicsDevice = graphicsDevice;
             itemNumber = 0;
             Axis = "Y";
             Items = new List<Button2D>();

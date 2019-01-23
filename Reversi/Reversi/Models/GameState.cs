@@ -9,14 +9,14 @@ namespace Reversi.Models
 {
     public abstract class GameState : IGameState
     {
-        protected GraphicsDevice _graphicsDevice;
-        protected Game _game;
+        protected GraphicsDevice graphicsDevice;
+        protected Game game;
         [XmlIgnore]
         public Type Type;
         public GameState(GraphicsDevice graphicsDevice, Game game)
         {
-            _graphicsDevice = graphicsDevice;
-            _game = game;
+            this.graphicsDevice = graphicsDevice;
+            this.game = game;
             Type = this.GetType();
         }
         public abstract void Initialize();

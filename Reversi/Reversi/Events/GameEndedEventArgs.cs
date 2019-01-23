@@ -8,10 +8,10 @@ namespace Reversi.Events
 {
     public class GameEndedEventArgs :EventArgs
     {
-        int _result;
-        private Score[] _scores;
-        public int Result { get { return _result; } private set { _result = value; } }
-        public Score[] Scores { get { return _scores; } private set { _scores = value; } }
+        int result;
+        private Score[] scores;
+        public int Result { get { return result; } private set { result = value; } }
+        public Score[] Scores { get { return scores; } private set { scores = value; } }
         public GameEndedEventArgs(int result, Score[] scores)
         {
             Result = result;

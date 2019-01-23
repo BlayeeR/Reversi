@@ -20,8 +20,8 @@ namespace Reversi.Menus
         public PauseMenu(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
             Axis = "Y";
-            _game = game;
-            _graphicsDevice = graphicsDevice;
+            base.game = game;
+            base.graphicsDevice = graphicsDevice;
             resumeButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Resume", "MenuFont");
             resumeButton.OnPressed += ResumeButton_OnPressed;
             mainMenuButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Main menu", "MenuFont");
@@ -36,7 +36,7 @@ namespace Reversi.Menus
 
         private void MainMenuButton_OnPressed(object sender, EventArgs e)
         {
-            GameStateManager.Instance.ChangeScreen(new TitleScreen(_graphicsDevice, _game));
+            GameStateManager.Instance.ChangeScreen(new TitleScreen(graphicsDevice, game));
         }
 
         public override void LoadContent(ContentManager content)

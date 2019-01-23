@@ -13,21 +13,21 @@ namespace Reversi.Sprites
 {
     public class Button2D : Basic2D
     {
-        public string _text;
-        public SpriteFont font;
+        public string Text;
+        private SpriteFont font;
         public Color FontColor;
         public Color UnselectedFontColor = new Color(122, 54, 6);
         public Color SelectedFontColor = new Color(193, 86, 9);
-        private string _fontPath;
+        private string fontPath;
 
         public override event EventHandler OnPressed;
 
         public Button2D(string path, Vector2 position, string text, string fontPath) : base(path, position)
         {
-            _text = text;
+            Text = text;
             FontColor = UnselectedFontColor;
             DrawingColor = Color.Transparent;
-            _fontPath = fontPath;
+            this.fontPath = fontPath;
         }
 
         public override void Update(GameTime gameTime)
@@ -45,16 +45,16 @@ namespace Reversi.Sprites
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 textDimensions = font.MeasureString(_text);
+            Vector2 textDimensions = font.MeasureString(Text);
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(font, _text, Position + new Vector2(-textDimensions.X / 2, -textDimensions.Y / 2), FontColor);
+            spriteBatch.DrawString(font, Text, Position + new Vector2(-textDimensions.X / 2, -textDimensions.Y / 2), FontColor);
         }
 
         public override void LoadContent(ContentManager content)
         {
-            if (_fontPath != String.Empty)
-                font = content.Load<SpriteFont>(_fontPath);
-            Dimensions = font.MeasureString(_text);
+            if (fontPath != String.Empty)
+                font = content.Load<SpriteFont>(fontPath);
+            Dimensions = font.MeasureString(Text);
         }
     }
 }
