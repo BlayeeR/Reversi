@@ -17,11 +17,12 @@ namespace Reversi
         private int boardSize = 8;
         List<Movement> movements;
         private event EventHandler OnSideChange, OnMovePerformed;
+        public event EventHandler OnGameEnded;
         private Button2D scoreText;
         private bool _currentSide, _singleplayer = false;
         private double aiMovementDelay = 0;
         public int previousMovements = 0;
-        public Score[] score = new Score[2] { new Score("", 0), new Score("", 0) };
+        public Score[] score = new Score[2];
         private bool CurrentSide { set { _currentSide = value;//false player1, true ai/player2
                 OnSideChange(this, null);
             } get { return _currentSide; } }
@@ -52,6 +53,8 @@ namespace Reversi
             tiles[(int)boardSize / 2 - 1][(int)boardSize / 2].ChangeSide();
             tiles[(int)boardSize / 2][(int)boardSize / 2-1].Visible = true;
             tiles[(int)boardSize / 2][(int)boardSize / 2 - 1].ChangeSide();
+            score[0] = new Score() { PlayerName = "", Value = 0 };
+            score[1] = new Score() { PlayerName = "", Value = 0 };
             scoreText = new Button2D("TitleScreen/Button", new Vector2(225, 850), $"", "TitleScreen/CreditsFont");
             scoreText.UnselectedFontColor = Color.Black;
             if (_singleplayer)
@@ -61,6 +64,7 @@ namespace Reversi
             OnSideChange += TileManager_OnSideChange;
             OnMovePerformed += TileManager_OnMovePerformed;
             movements = CalculatePossibleMovements(false);
+            
         }
 
         private void TileManager_OnMovePerformed(object sender, EventArgs e)
@@ -84,44 +88,21 @@ namespace Reversi
         {
             previousMovements = movements.Count;
             movements = CalculatePossibleMovements(CurrentSide);
-            if (movements.Count == 0 && previousMovements == 0)
+            if (movements.Count == 0)
             {
                 if (previousMovements == 0)
                 {
-                    if (_singleplayer)
-                    {
-                        if (CountTiles(false) > CountTiles(true))//player win
-                        {
-                            //show ending screen
-                        }
-                        else if (CountTiles(false) == CountTiles(true))
-                        {
-                            //show ending screen
-                            //draw
-                        }
-                        else
-                        {
-                            //playerlose
-                        }
-                    }
+                    GameEndedEventArgs gameEndedEventArgs;
+                    if (CountTiles(false) > CountTiles(true))//player win
+                        gameEndedEventArgs = new GameEndedEventArgs(-1, score);
+                    else if (CountTiles(false) == CountTiles(true))
+                        gameEndedEventArgs = new GameEndedEventArgs(0, score);
                     else
-                    {
-                        if (CountTiles(false) > CountTiles(true))//black win
-                        {
-
-                        }
-                        else if (CountTiles(false) == CountTiles(true))
-                        {
-                            //draw
-                        }
-                        else
-                        {
-                            //white win
-                        }
-                    }
+                        gameEndedEventArgs = new GameEndedEventArgs(1, score);
+                    OnGameEnded(this, gameEndedEventArgs);
                 }
                 else
-                CurrentSide = !CurrentSide;
+                    CurrentSide = !CurrentSide;
             }
         }
 
@@ -205,7 +186,7 @@ namespace Reversi
             {
 
                 aiMovementDelay += gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (aiMovementDelay >= 1500)
+                if (aiMovementDelay >= 1)
                 {
                     Movement movement = CalculatePossibleMovements(CurrentSide).OrderBy(o => o.TakenTiles.Count).Last();
                     movement.Perform();

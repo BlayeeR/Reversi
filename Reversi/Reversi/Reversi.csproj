@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameEndedEventArgs.cs" />
     <Compile Include="Menus\PauseMenu.cs" />
     <Compile Include="Movement.cs" />
     <Compile Include="Score.cs" />

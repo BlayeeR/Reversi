@@ -26,11 +26,11 @@ namespace Reversi.Screens
             backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameState.GameStateManager.Instance.Dimensions.X / 2, GameState.GameStateManager.Instance.Dimensions.Y / 2), GameState.GameStateManager.Instance.Dimensions);
             creditsText = new Button2D("TitleScreen/Button", new Vector2(225, 850), "Created by\nJakub Olech", "TitleScreen/CreditsFont");
             creditsText.UnselectedFontColor = Color.Black;
-            highscoresText = new Button2D("TitleScreen/Button", new Vector2(240, 170), "High scores:\n", "MenuFont");
-            scoreManager = new ScoreManager();
-            foreach(Score score in scoreManager.Scores)
+            highscoresText = new Button2D("TitleScreen/Button", new Vector2(120, 110), "High scores:\n", "MenuFont", false, false);
+            scoreManager = ScoreManager.Load();
+            foreach (Score score in scoreManager.Scores)
             {
-                highscoresText._text += $"{scoreManager.Scores.IndexOf(score) + 1}: {score.PlayerName}- {score.Value}";
+                highscoresText._text += $"{scoreManager.Scores.IndexOf(score) + 1}: {score.PlayerName}- {score.Value}\n";
             }
 
         }

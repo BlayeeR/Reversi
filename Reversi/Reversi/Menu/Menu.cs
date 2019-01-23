@@ -14,6 +14,7 @@ namespace Reversi.Menu
     {
         public string Axis;
         public List<Button2D> Items;
+        public bool ToLeft = false;
         int itemNumber;
         protected Game _game;
         protected GraphicsDevice _graphicsDevice;
@@ -25,6 +26,7 @@ namespace Reversi.Menu
             itemNumber = 0;
             Axis = "Y";
             Items = new List<Button2D>();
+            ToLeft = false;
         }
 
         public void AlignMenuItems()
