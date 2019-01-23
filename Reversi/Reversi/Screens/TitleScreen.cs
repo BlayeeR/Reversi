@@ -18,14 +18,13 @@ namespace Reversi.Screens
         public MenuManager menuManager = new MenuManager();
         public TitleMenu menu;
         private Basic2D backgroundImage;
-        private Button2D creditsText;
+        private Text2D creditsText;
         public TitleScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
             _game = game;
             _graphicsDevice = graphicsDevice;
             backgroundImage = new Basic2D("Game/BackgroundImage", new Vector2(GameState.GameStateManager.Instance.Dimensions.X / 2, GameState.GameStateManager.Instance.Dimensions.Y / 2), GameState.GameStateManager.Instance.Dimensions);
-            creditsText = new Button2D("TitleScreen/Button", new Vector2(225, 850), "Created by\nJakub Olech", "TitleScreen/CreditsFont");
-            creditsText.UnselectedFontColor = Color.Black;
+            creditsText = new Text2D(new Vector2(225, 850), "Created by\nJakub Olech", "TitleScreen/CreditsFont", Color.Black);
             menu = new TitleMenu(_graphicsDevice, _game);
             menuManager.AddMenu(menu);
         }
