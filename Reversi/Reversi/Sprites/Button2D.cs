@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Reversi.Managers;
 
 namespace Reversi.Sprites
 {
@@ -17,26 +18,16 @@ namespace Reversi.Sprites
         public Color FontColor;
         public Color UnselectedFontColor = new Color(122, 54, 6);
         public Color SelectedFontColor = new Color(193, 86, 9);
-        public override event EventHandler OnPressed;
+        private string _fontPath;
 
+        public override event EventHandler OnPressed;
 
         public Button2D(string path, Vector2 position, string text, string fontPath) : base(path, position)
         {
             _text = text;
-            if (fontPath != String.Empty)
-                font = Globals.Content.Load<SpriteFont>(fontPath);
-            Dimensions = font.MeasureString(_text);
             FontColor = UnselectedFontColor;
             DrawingColor = Color.Transparent;
-        }
-   
-        public Button2D(string path, Vector2 position, Vector2 dimensions, string text, string fontPath) : base(path, position, dimensions)
-        {
-            _text = text;
-            if (fontPath != String.Empty)
-                font = Globals.Content.Load<SpriteFont>(fontPath);
-            Dimensions = font.MeasureString(_text);
-            DrawingColor = Color.Transparent;
+            _fontPath = fontPath;
         }
 
         public override void Update(GameTime gameTime)
@@ -59,5 +50,11 @@ namespace Reversi.Sprites
             spriteBatch.DrawString(font, _text, Position + new Vector2(-textDimensions.X / 2, -textDimensions.Y / 2), FontColor);
         }
 
+        public override void LoadContent(ContentManager content)
+        {
+            if (_fontPath != String.Empty)
+                font = content.Load<SpriteFont>(_fontPath);
+            Dimensions = font.MeasureString(_text);
+        }
     }
 }

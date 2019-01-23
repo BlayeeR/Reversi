@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Reversi.Events;
 using Reversi.Sprites;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reversi
+namespace Reversi.Managers
 {
     public class TileManager
     {
@@ -18,7 +20,7 @@ namespace Reversi
         List<Movement> movements;
         private event EventHandler OnSideChange, OnMovePerformed;
         public event EventHandler OnGameEnded;
-        private Button2D scoreText;
+        private Text2D scoreText;
         private bool _currentSide, _singleplayer = false;
         private double aiMovementDelay = 0;
         public int previousMovements = 0;
@@ -26,45 +28,17 @@ namespace Reversi
         private bool CurrentSide { set { _currentSide = value;//false player1, true ai/player2
                 OnSideChange(this, null);
             } get { return _currentSide; } }
-        public TileManager(Vector2 gameBoardPosition, Vector2 gameBoardDimensions, bool singleplayer)
+        public TileManager(Vector2 gameBoardPosition, Vector2 gameBoardDimensions, bool singleplayer, ContentManager content)
         {
             _singleplayer = singleplayer;
             _gameBoardPosition = gameBoardPosition;
             _gameBoardDimensions = gameBoardDimensions;
             tiles = new List<List<Tile>>();
-            Vector2 tileSize = new Vector2(_gameBoardDimensions.X / boardSize * 0.96f);
-            for(int i =0; i < boardSize; i++)
-            {
-                List<Tile> tempTiles = new List<Tile>();
-                for (int j = 0; j < boardSize; j++)
-                {
-                    Tile tile = new Tile(true, false, new Vector2(_gameBoardPosition.X + 0.02f * _gameBoardDimensions.X + j * tileSize.X + tileSize.X / 2, _gameBoardPosition.Y + 0.02f * _gameBoardDimensions.Y + i * tileSize.Y + tileSize.Y / 2), tileSize);
-                    tile.OnTilePressed += Tile_OnTilePressed;
-                    tile.OnMouseOut += Tile_OnMouseOut;
-                    tile.OnMouseOver += Tile_OnMouseOver;
-                    tempTiles.Add(tile);
-                    
-                }
-                tiles.Add(tempTiles);
-            }
-            tiles[(int)boardSize / 2 - 1][(int)boardSize / 2 - 1].Visible = true;
-            tiles[(int)boardSize / 2][(int)boardSize / 2].Visible = true;
-            tiles[(int)boardSize / 2-1][(int)boardSize / 2].Visible = true;
-            tiles[(int)boardSize / 2 - 1][(int)boardSize / 2].ChangeSide();
-            tiles[(int)boardSize / 2][(int)boardSize / 2-1].Visible = true;
-            tiles[(int)boardSize / 2][(int)boardSize / 2 - 1].ChangeSide();
             score[0] = new Score() { PlayerName = "", Value = 0 };
             score[1] = new Score() { PlayerName = "", Value = 0 };
-            scoreText = new Button2D("TitleScreen/Button", new Vector2(225, 850), $"", "TitleScreen/CreditsFont");
-            scoreText.UnselectedFontColor = Color.Black;
-            if (_singleplayer)
-                scoreText._text = $"Player score: {score[0].Value}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
-            else
-                scoreText._text = $"Black score: {score[0].Value}\nWhite score: {score[1].Value}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
             OnSideChange += TileManager_OnSideChange;
             OnMovePerformed += TileManager_OnMovePerformed;
-            movements = CalculatePossibleMovements(false);
-            
+            scoreText = new Text2D(new Vector2(225, 850), $"", "TitleScreen/CreditsFont", Color.Black);
         }
 
         private void TileManager_OnMovePerformed(object sender, EventArgs e)
@@ -79,9 +53,41 @@ namespace Reversi
                 score[1].Value += movement.Score();
             }
             if (_singleplayer)
-                scoreText._text = $"Player score: {score[0].Value}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
+                scoreText.Text = $"Player score: {score[0].Value}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
             else
-                scoreText._text = $"Black score: {score[0].Value}\nWhite score: {score[1].Value}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
+                scoreText.Text = $"Black score: {score[0].Value}\nWhite score: {score[1].Value}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
+        }
+
+        public void LoadContent(ContentManager content)
+        {
+            Vector2 tileSize = new Vector2(_gameBoardDimensions.X / boardSize * 0.96f);
+            for (int i = 0; i < boardSize; i++)
+            {
+                List<Tile> tempTiles = new List<Tile>();
+                for (int j = 0; j < boardSize; j++)
+                {
+                    Tile tile = new Tile(true, false, new Vector2(_gameBoardPosition.X + 0.02f * _gameBoardDimensions.X + j * tileSize.X + tileSize.X / 2, _gameBoardPosition.Y + 0.02f * _gameBoardDimensions.Y + i * tileSize.Y + tileSize.Y / 2), tileSize);
+                    tile.LoadContent(content);
+                    tile.OnTilePressed += Tile_OnTilePressed;
+                    tile.OnMouseOut += Tile_OnMouseOut;
+                    tile.OnMouseOver += Tile_OnMouseOver;
+                    tempTiles.Add(tile);
+
+                }
+                tiles.Add(tempTiles);
+            }
+            tiles[(int)boardSize / 2 - 1][(int)boardSize / 2 - 1].Visible = true;
+            tiles[(int)boardSize / 2][(int)boardSize / 2].Visible = true;
+            tiles[(int)boardSize / 2 - 1][(int)boardSize / 2].Visible = true;
+            tiles[(int)boardSize / 2 - 1][(int)boardSize / 2].ChangeSide();
+            tiles[(int)boardSize / 2][(int)boardSize / 2 - 1].Visible = true;
+            tiles[(int)boardSize / 2][(int)boardSize / 2 - 1].ChangeSide();
+            scoreText.LoadContent(content);
+            if (_singleplayer)
+                scoreText.Text = $"Player score: {score[0].Value}\nPlayer disks: {CountTiles(false)}\nEnemy disks: {CountTiles(true)}";
+            else
+                scoreText.Text = $"Black score: {score[0].Value}\nWhite score: {score[1].Value}\nBlack disks: {CountTiles(false)}\nWhite disks: {CountTiles(true)}";
+            movements = CalculatePossibleMovements(false);
         }
 
         private void TileManager_OnSideChange(object sender, EventArgs e)
