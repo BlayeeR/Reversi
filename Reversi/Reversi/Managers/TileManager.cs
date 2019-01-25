@@ -71,7 +71,6 @@ namespace Reversi.Managers
                     tile.OnMouseOut += Tile_OnMouseOut;
                     tile.OnMouseOver += Tile_OnMouseOver;
                     tempTiles.Add(tile);
-
                 }
                 tiles.Add(tempTiles);
             }
@@ -191,7 +190,7 @@ namespace Reversi.Managers
             {
 
                 aiMovementDelay += gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (aiMovementDelay >= 1)
+                if (aiMovementDelay >= 1500)
                 {
                     Movement movement = CalculatePossibleMovements(CurrentSide).OrderBy(o => o.TakenTiles.Count).Last();
                     movement.Perform();

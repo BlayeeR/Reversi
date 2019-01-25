@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Reversi.Events.GameEndedEventArgs">
+    <Position X="2.5" Y="9.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgABAAIAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\GameEndedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Main">
+    <Position X="0.5" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAEEAAAAAAAwAAAAAAAAAAAAAAAAgAAAAAAAAAAAQ=</HashCode>
+      <FileName>Main.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Movement">
+    <Position X="0.5" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAgggAAAAAAAAAAAAAEAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Movement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Program">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Score">
+    <Position X="6.5" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Score.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Tile">
+    <Position X="4.5" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAIAAhgAgAIAAwAAACAAAIAAICAIAQAASAAQ=</HashCode>
+      <FileName>Tile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Managers.GameStateManager">
+    <Position X="2.5" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQCEAAAAAAAAgAQAAAAAAIAAABAiAAARAAAAAAAAAQ=</HashCode>
+      <FileName>Managers\GameStateManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Managers.InputManager">
+    <Position X="4.5" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAAAAQAAgAAAAAAAAQAAIABAAAAAQAAACBBSAAA=</HashCode>
+      <FileName>Managers\InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Managers.MenuManager">
+    <Position X="0.5" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAAAQAAgEQAAAAAAAAAAACAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Managers\MenuManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Managers.ScoreManager">
+    <Position X="2.5" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAgIBAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Managers\ScoreManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Managers.TileManager">
+    <Position X="6.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ABQAgAAABAEAAwAIgACIggABCgABACgAAQAAAggAAAw=</HashCode>
+      <FileName>Managers\TileManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Menus.PauseMenu">
+    <Position X="12.75" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAABAAAAAAAAAAAIAAAQAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Menus\PauseMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Menus.TitleMenu">
+    <Position X="15.25" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAICIAAAAAAAIAAAAIAAAAACgAgAAAAAAAAAAAQ=</HashCode>
+      <FileName>Menus\TitleMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Models.GameState">
+    <Position X="21.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAAwAAAAAAAAAAAAAAAAQIAQAAAAAAAAQ=</HashCode>
+      <FileName>Models\GameState.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Reversi.Models.MenuModel">
+    <Position X="14" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAAAAACwAAAAAAAAAAAAAAgAQIAAAAAAAAAAU=</HashCode>
+      <FileName>Models\MenuModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Reversi.Models.Sprite">
+    <Position X="9.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Models\Sprite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Reversi.Screens.GameScreen">
+    <Position X="17.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAYgEBAAAEAAAwAAAAAAAAAAAAIAAAAAQAAAAAAAAAQ=</HashCode>
+      <FileName>Screens\GameScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Screens.LeaderboardsScreen">
+    <Position X="19.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BAQAEAAAAEAAAwAAAAAAAAAAAAAAAACAAAAAAAAAQAQ=</HashCode>
+      <FileName>Screens\LeaderboardsScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Screens.PauseScreen">
+    <Position X="21.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQQEAAAAEAAAwAAAAAAAAgAAAAAAACAAAAAAAAAAAQ=</HashCode>
+      <FileName>Screens\PauseScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Screens.SplashScreen">
+    <Position X="23.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAAwAAAgAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Screens\SplashScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Screens.TitleScreen">
+    <Position X="25.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQQEAAAAEAAAwAAAAAAAAgAAAAAAACAAAAAAAAAAAQ=</HashCode>
+      <FileName>Screens\TitleScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Sprites.Basic2D">
+    <Position X="8.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAACAgAgEAACAAIAAEAAAgAACAIAABATAAQ=</HashCode>
+      <FileName>Sprites\Basic2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Sprites.Button2D">
+    <Position X="8.5" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAYAQIAAAAAAAgAAAAAAAAAAAEAAAAAgAAAACgAAAAQ=</HashCode>
+      <FileName>Sprites\Button2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reversi.Sprites.Text2D">
+    <Position X="10.75" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAYAAIAAAAAAAgAgAAAAAAAAAAAAAAAggAAACAAAACQ=</HashCode>
+      <FileName>Sprites\Text2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Reversi.Interfaces.IGameState">
+    <Position X="6.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Interfaces\IGameState.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Reversi.Interfaces.IMenu">
+    <Position X="4.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAU=</HashCode>
+      <FileName>Interfaces\IMenu.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Reversi.Interfaces.ISprite">
+    <Position X="2.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Interfaces\ISprite.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
