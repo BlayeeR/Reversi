@@ -33,8 +33,8 @@ namespace Reversi.Managers
             this.gameBoardPosition = gameBoardPosition;
             this.gameBoardDimensions = gameBoardDimensions;
             tiles = new List<List<Tile>>();
-            score[0] = new Score() { PlayerName = "", Value = 0 };
-            score[1] = new Score() { PlayerName = "", Value = 0 };
+            score[0] = new Score() { Name = "", Value = 0 };
+            score[1] = new Score() { Name = "", Value = 0 };
             OnSideChange += TileManager_OnSideChange;
             OnMovePerformed += TileManager_OnMovePerformed;
             scoreText = new Text2D(new Vector2(225, 850), $"", "TitleScreen/CreditsFont", Color.Black);

@@ -52,7 +52,7 @@ namespace Reversi.Screens
             highscoresText.LoadContent(content);
             foreach (Score score in scoreManager.Scores)
             {
-                highscoresText.Text += $"{scoreManager.Scores.IndexOf(score) + 1}: {score.PlayerName}- {score.Value}\n";
+                highscoresText.Text += $"{scoreManager.Scores.IndexOf(score) + 1}: {score.Name}- {score.Value}\n";
             }
         }
 

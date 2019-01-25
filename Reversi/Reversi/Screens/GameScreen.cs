@@ -63,21 +63,21 @@ namespace Reversi.Screens
                 if (gameEndedEventArgs.Scores[0].Value > scoreManager.Scores.LastOrDefault().Value && gameEndedEventArgs.Scores[1].Value > scoreManager.Scores.LastOrDefault().Value)
                 {
                     texts[1].Text += $"New high scores: {gameEndedEventArgs.Scores[0].Value}, {gameEndedEventArgs.Scores[1].Value}";
-                    gameEndedEventArgs.Scores[0].PlayerName = DateTime.Now.ToString();
-                    gameEndedEventArgs.Scores[1].PlayerName = DateTime.Now.ToString();
+                    gameEndedEventArgs.Scores[0].Name = DateTime.Now.ToString();
+                    gameEndedEventArgs.Scores[1].Name = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[0]);
                     scoreManager.Add(gameEndedEventArgs.Scores[1]);
                 }
                 else if (gameEndedEventArgs.Scores[0].Value > scoreManager.Scores.LastOrDefault().Value && gameEndedEventArgs.Scores[0].Value != 0)
                 {
                     texts[1].Text += $"New high score: {gameEndedEventArgs.Scores[0].Value}";
-                    gameEndedEventArgs.Scores[0].PlayerName = DateTime.Now.ToString();
+                    gameEndedEventArgs.Scores[0].Name = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[0]);
                 }
                 else if (gameEndedEventArgs.Scores[1].Value > scoreManager.Scores.LastOrDefault().Value && gameEndedEventArgs.Scores[1].Value != 0)
                 {
                     texts[1].Text += $"New high score: {gameEndedEventArgs.Scores[1].Value}";
-                    gameEndedEventArgs.Scores[1].PlayerName = DateTime.Now.ToString();
+                    gameEndedEventArgs.Scores[1].Name = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[1]);
                 }
             }
@@ -86,21 +86,21 @@ namespace Reversi.Screens
                 if (gameEndedEventArgs.Scores[0].Value != 0 && gameEndedEventArgs.Scores[1].Value != 0)
                 {
                     texts[1].Text += $"New high scores: {gameEndedEventArgs.Scores[0].Value}, {gameEndedEventArgs.Scores[1].Value}";
-                    gameEndedEventArgs.Scores[0].PlayerName = DateTime.Now.ToString();
-                    gameEndedEventArgs.Scores[1].PlayerName = DateTime.Now.ToString();
+                    gameEndedEventArgs.Scores[0].Name = DateTime.Now.ToString();
+                    gameEndedEventArgs.Scores[1].Name = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[0]);
                     scoreManager.Add(gameEndedEventArgs.Scores[1]);
                 }
                 else if (gameEndedEventArgs.Scores[0].Value != 0)
                 {
                     texts[1].Text += $"New high score: {gameEndedEventArgs.Scores[0].Value}";
-                    gameEndedEventArgs.Scores[0].PlayerName = DateTime.Now.ToString();
+                    gameEndedEventArgs.Scores[0].Name = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[0]);
                 }
                 else if (gameEndedEventArgs.Scores[1].Value != 0)
                 {
                     texts[1].Text += $"New high score: {gameEndedEventArgs.Scores[1].Value}";
-                    gameEndedEventArgs.Scores[1].PlayerName = DateTime.Now.ToString();
+                    gameEndedEventArgs.Scores[1].Name = DateTime.Now.ToString();
                     scoreManager.Add(gameEndedEventArgs.Scores[1]);
                 }
             }
