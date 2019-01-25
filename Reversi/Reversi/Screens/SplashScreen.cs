@@ -20,7 +20,7 @@ namespace Reversi.Screens
         public SplashScreen(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
             base.graphicsDevice = graphicsDevice;
-            splashImage = new Basic2D("SplashScreen/SplashImage", new Vector2(100, 120));
+            splashImage = new Basic2D("SplashScreen/SplashImage", new Vector2(GameStateManager.Instance.Dimensions.X/2, GameStateManager.Instance.Dimensions.Y / 2), GameStateManager.Instance.Dimensions);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
