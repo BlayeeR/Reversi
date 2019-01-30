@@ -6,6 +6,7 @@ using Reversi.Managers;
 using Reversi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace Reversi.Sprites
         {
             Position = position;
             this.path = path;
+            this.texture = null;
             Dimensions = dimensions;
         }
 
@@ -33,6 +35,22 @@ namespace Reversi.Sprites
         {
             Position = position;
             this.path = path;
+            this.texture = null;
+            Dimensions = Vector2.Zero;
+        }
+        public Basic2D(Texture2D texture, Vector2 position, Vector2 dimensions) : this()
+        {
+            Position = position;
+            this.path = String.Empty;
+            this.texture = texture;
+            Dimensions = dimensions;
+        }
+
+        public Basic2D(Texture2D texture, Vector2 position) : this()
+        {
+            Position = position;
+            this.path = String.Empty;
+            this.texture = texture;
             Dimensions = Vector2.Zero;
         }
 
@@ -69,7 +87,8 @@ namespace Reversi.Sprites
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>(path);
+            if(texture == null)
+                texture = content.Load<Texture2D>(path);
             Dimensions = Dimensions==Vector2.Zero?new Vector2(texture.Width, texture.Height):Dimensions;
         }
 

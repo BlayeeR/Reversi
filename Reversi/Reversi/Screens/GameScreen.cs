@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,10 +8,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Reversi.Effects;
 using Reversi.Events;
 using Reversi.Managers;
 using Reversi.Models;
 using Reversi.Sprites;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Reversi.Screens
 {
@@ -18,10 +21,11 @@ namespace Reversi.Screens
     {
         private TileManager tileManager;
         private Basic2D backgroundImage;
-        private bool gameEnded = false, singleplayer;
+        private bool gameEnded = false, singleplayer, paused = false;
         private Text2D[] texts = new Text2D[2];
         private Text2D creditsText;
         private ScoreManager scoreManager;
+        private GaussianBlur gaussianBlur;
         public GameScreen(GraphicsDevice graphicsDevice, Game game, bool singleplayer = true) : base(graphicsDevice, game)
         {
             this.singleplayer = singleplayer;
@@ -110,7 +114,6 @@ namespace Reversi.Screens
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            graphicsDevice.Clear(Color.AliceBlue);
             spriteBatch.Begin();
             backgroundImage.Draw(spriteBatch);
             if (!gameEnded)
@@ -122,6 +125,21 @@ namespace Reversi.Screens
                 creditsText.Draw(spriteBatch);
             }
             spriteBatch.End();
+            if (paused)
+            {
+                int[] backBuffer = new int[graphicsDevice.Viewport.Width * graphicsDevice.Viewport.Height];
+                graphicsDevice.GetBackBufferData(backBuffer);
+                Texture2D tempTexture = new Texture2D(graphicsDevice, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height, false, graphicsDevice.PresentationParameters.BackBufferFormat);
+                tempTexture.SetData(backBuffer);
+                gaussianBlur.Input = tempTexture;
+                gaussianBlur.Draw();
+                graphicsDevice.GetBackBufferData(backBuffer);
+                tempTexture = new Texture2D(graphicsDevice, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height, false, graphicsDevice.PresentationParameters.BackBufferFormat);
+                tempTexture.SetData(backBuffer);
+                paused = false;
+                GameStateManager.Instance.AddScreen(new PauseScreen(graphicsDevice, game, tempTexture));
+
+            }
         }
 
         public override void Initialize()
@@ -138,6 +156,7 @@ namespace Reversi.Screens
             foreach (Text2D text in texts)
                 text.LoadContent(content);
             backgroundImage.LoadContent(content);
+            gaussianBlur = new GaussianBlur(graphicsDevice, content, 5);
         }
 
         public override void UnloadContent()
@@ -147,7 +166,15 @@ namespace Reversi.Screens
         public override void Update(GameTime gameTime)
         {
             if (InputManager.Instance.KeyPressed(Keys.Escape) && !gameEnded)
-                GameStateManager.Instance.AddScreen(new PauseScreen(graphicsDevice, game));
+            {
+                paused = true;
+                /*graphicsDevice.SetRenderTarget(renderTarget);
+                graphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+
+                graphicsDevice.Present();
+                graphicsDevice.SetRenderTarget(null);
+                GameStateManager.Instance.AddScreen(new PauseScreen(graphicsDevice, game));*/
+            }
             backgroundImage.Update(gameTime);
             if (!gameEnded)
                 tileManager.Update(gameTime);

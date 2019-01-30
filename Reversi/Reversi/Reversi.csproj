@@ -41,6 +41,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Effects\GaussianBlur.cs" />
+    <Compile Include="Effects\PostProcessor.cs" />
+    <Compile Include="Effects\RenderCapture.cs" />
     <Compile Include="Events\GameEndedEventArgs.cs" />
     <Compile Include="Interfaces\ISprite.cs" />
     <Compile Include="Menus\PauseMenu.cs" />
@@ -78,13 +81,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\GaussianBlur.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
