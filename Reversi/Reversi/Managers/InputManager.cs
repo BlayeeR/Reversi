@@ -41,8 +41,6 @@ namespace Reversi.Managers
             return false;
         }
 
-        public MouseState MouseState() => currentMouseState;
-
         public bool KeyPressed(params Keys[] keys)
         {
             foreach (Keys key in keys)
@@ -73,9 +71,11 @@ namespace Reversi.Managers
             return false;
         }
 
-        public Vector2 MousePosition()
+        public bool MouseIntersects(Rectangle target)
         {
-            return currentMouseState.Position.ToVector2();
+            if (currentMouseState.Position.X > target.Left && currentMouseState.Position.Y > target.Top && currentMouseState.Position.X < target.Right && currentMouseState.Position.Y < target.Bottom)
+                return true;
+            return false;
         }
     }
 }

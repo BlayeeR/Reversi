@@ -15,12 +15,23 @@ namespace Reversi.Sprites
 {
     public class Basic2D : Sprite
     {
-        public Vector2 Position, Dimensions;
+        public Vector2 Position { get { return position; } set {
+                position = value;
+                hitboxRectangle.Location = new Point((int)(Position.X - Dimensions.X / 2), (int)(Position.Y - Dimensions.Y / 2));
+            } }
+        public Vector2 Dimensions { get { return dimensions; } set {
+                dimensions = value;
+                hitboxRectangle.Location = new Point((int)(Position.X - Dimensions.X / 2), (int)(Position.Y - Dimensions.Y / 2));
+                hitboxRectangle.Size = Dimensions.ToPoint();
+            } }
+
+        public Vector2 position, dimensions;
         private Texture2D texture;
         public virtual event EventHandler OnMouseOver, OnMouseOut, OnPressed;
         private bool mouseOverOldState=false;
         public bool IsActive=false;
         public Color DrawingColor = Color.White;
+        private Rectangle hitboxRectangle = new Rectangle();
         private string path;
 
         public Basic2D(string path, Vector2 position, Vector2 dimensions) :  this()
@@ -63,13 +74,12 @@ namespace Reversi.Sprites
 
         private void Basic2D_OnPressed(object sender, EventArgs e)
         {
+            return;
         }
 
         private void Basic2D_OnMouseOver(object sender, EventArgs e)
         {
             mouseOverOldState = true;
-            
-
         }
 
         private void Basic2D_OnMouseOut(object sender, EventArgs e)
@@ -94,8 +104,7 @@ namespace Reversi.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            Vector2 mousePosition = InputManager.Instance.MousePosition();
-            if (mousePosition.X > Position.X - Dimensions.X / 2 && mousePosition.Y > Position.Y - Dimensions.Y / 2 && mousePosition.X < Position.X + Dimensions.X / 2 && mousePosition.Y < Position.Y + Dimensions.Y / 2)
+            if (InputManager.Instance.MouseIntersects(hitboxRectangle))
             {
                 if (InputManager.Instance.LMBPressed())
                     OnPressed(this, null);
