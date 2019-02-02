@@ -16,7 +16,7 @@ namespace Reversi.Models
     public abstract class MenuModel : IMenu
     {
         public string Axis;
-        public List<Button2D> Items;
+        public List<MenuItem> Items;
         public bool ToLeft = false;
         private int itemNumber;
         protected Game game;
@@ -28,43 +28,43 @@ namespace Reversi.Models
             this.graphicsDevice = graphicsDevice;
             itemNumber = 0;
             Axis = "Y";
-            Items = new List<Button2D>();
+            Items = new List<MenuItem>();
             ToLeft = false;
         }
 
         public void AlignMenuItems()
         {
             Vector2 dimensions = Vector2.Zero;
-            foreach (Button2D button in Items)
-                dimensions += button.Dimensions ;
+            foreach (MenuItem item in Items)
+                dimensions += item.Dimensions ;
             dimensions = new Vector2((GameStateManager.Instance.Dimensions.X - dimensions.X) / 2, (GameStateManager.Instance.Dimensions.Y - dimensions.Y) / 2);
-            foreach (Button2D button in Items)
+            foreach (MenuItem item in Items)
             {
                 if (Axis == "X")
-                    button.Position = new Vector2(dimensions.X, (GameStateManager.Instance.Dimensions.Y - button.Dimensions.Y) / 2);
+                    item.Position = new Vector2(dimensions.X, (GameStateManager.Instance.Dimensions.Y - item.Dimensions.Y) / 2);
                 else if (Axis == "Y")
-                    button.Position = new Vector2((GameStateManager.Instance.Dimensions.X ) / 2, dimensions.Y);
-                dimensions += button.Dimensions;
-                button.OnMouseOver += Button_OnMouseOver;
+                    item.Position = new Vector2((GameStateManager.Instance.Dimensions.X ) / 2, dimensions.Y);
+                dimensions += item.Dimensions;
+                item.OnMouseOver += Item_OnMouseOver;
             }
         }
 
-        private void Button_OnMouseOver(object sender, EventArgs e)
+        private void Item_OnMouseOver(object sender, EventArgs e)
         {
-            Button2D button = (sender as Button2D);
-            if (Items.IndexOf(button) != itemNumber)
+            MenuItem item = (sender as MenuItem);
+            if (Items.IndexOf(item) != itemNumber)
             {
-                button.IsActive = true;
+                item.IsActive = true;
                 Items[itemNumber].IsActive = false;
-                itemNumber = Items.IndexOf(button);
+                itemNumber = Items.IndexOf(item);
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Button2D button in Items)
+            foreach (MenuItem item in Items)
             {
-                button.Draw(spriteBatch);
+                item.Draw(spriteBatch);
             }
         }
 
@@ -72,7 +72,6 @@ namespace Reversi.Models
         {
             AlignMenuItems();
         }
-
 
         public void Update(GameTime gameTime)
         {

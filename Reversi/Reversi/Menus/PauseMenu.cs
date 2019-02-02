@@ -16,16 +16,16 @@ namespace Reversi.Menus
 {
     public class PauseMenu : MenuModel
     {
-        private Button2D mainMenuButton, resumeButton;
+        private MenuItem mainMenuItem, resumeItem;
         public PauseMenu(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
             Axis = "Y";
             base.game = game;
             base.graphicsDevice = graphicsDevice;
-            resumeButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Resume", "MenuFont");
-            resumeButton.OnPressed += ResumeButton_OnPressed;
-            mainMenuButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Main menu", "MenuFont");
-            mainMenuButton.OnPressed += MainMenuButton_OnPressed;
+            resumeItem = new MenuItem(new Button2D("TitleScreen/Button", Vector2.Zero, "Resume", "MenuFont"));
+            resumeItem.OnPressed += ResumeButton_OnPressed;
+            mainMenuItem = new MenuItem(new Button2D("TitleScreen/Button", Vector2.Zero, "Main menu", "MenuFont"));
+            mainMenuItem.OnPressed += MainMenuButton_OnPressed;
         }
 
 
@@ -41,10 +41,10 @@ namespace Reversi.Menus
 
         public override void LoadContent(ContentManager content)
         {
-            Items.Add(resumeButton);
-            Items.Add(mainMenuButton);
-            resumeButton.LoadContent(content);
-            mainMenuButton.LoadContent(content);
+            Items.Add(resumeItem);
+            Items.Add(mainMenuItem);
+            resumeItem.LoadContent(content);
+            mainMenuItem.LoadContent(content);
         }
     }
 }

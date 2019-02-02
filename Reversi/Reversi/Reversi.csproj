@@ -47,6 +47,7 @@
     <Compile Include="Events\GameEndedEventArgs.cs" />
     <Compile Include="Interfaces\ISprite.cs" />
     <Compile Include="Menus\PauseMenu.cs" />
+    <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Models\Sprite.cs" />
     <Compile Include="Movement.cs" />
     <Compile Include="Score.cs" />

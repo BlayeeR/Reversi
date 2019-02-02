@@ -16,20 +16,20 @@ namespace Reversi.Menus
 {
     public class TitleMenu : MenuModel
     {
-        Button2D exitButton, multiplayerButton, singleplayerButton, leaderboardsButton;
+        MenuItem exitItem, mutliplayerItem, singleplayerItem, leaderboardsItem;
         public TitleMenu(GraphicsDevice graphicsDevice, Game game) : base(graphicsDevice, game)
         {
             Axis = "Y";
             base.game = game;
             base.graphicsDevice = graphicsDevice;
-            singleplayerButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Singleplayer", "MenuFont");
-            singleplayerButton.OnPressed += SingleplayerButton_OnPressed;
-            multiplayerButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Multiplayer", "MenuFont");
-            multiplayerButton.OnPressed += MultiplayerButton_OnPressed;
-            leaderboardsButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Leaderboards", "MenuFont");
-            leaderboardsButton.OnPressed += LeaderboardsButton_OnPressed;
-            exitButton = new Button2D("TitleScreen/Button", Vector2.Zero, "Exit", "MenuFont");
-            exitButton.OnPressed += ExitButton_OnPressed;
+            singleplayerItem = new MenuItem(new Button2D("TitleScreen/Button", Vector2.Zero, "Singleplayer", "MenuFont"));
+            singleplayerItem.OnPressed += SingleplayerButton_OnPressed;
+            mutliplayerItem = new MenuItem(new Button2D("TitleScreen/Button", Vector2.Zero, "Multiplayer", "MenuFont"));
+            mutliplayerItem.OnPressed += MultiplayerButton_OnPressed;
+            leaderboardsItem = new MenuItem(new Button2D("TitleScreen/Button", Vector2.Zero, "Leaderboards", "MenuFont"));
+            leaderboardsItem.OnPressed += LeaderboardsButton_OnPressed;
+            exitItem = new MenuItem(new Button2D("TitleScreen/Button", Vector2.Zero, "Exit", "MenuFont"));
+            exitItem.OnPressed += ExitButton_OnPressed;
         }
 
         private void LeaderboardsButton_OnPressed(object sender, EventArgs e)
@@ -54,14 +54,14 @@ namespace Reversi.Menus
 
         public override void LoadContent(ContentManager content)
         {
-            singleplayerButton.LoadContent(content);
-            multiplayerButton.LoadContent(content);
-            leaderboardsButton.LoadContent(content);
-            exitButton.LoadContent(content);
-            Items.Add(singleplayerButton);
-            Items.Add(multiplayerButton);
-            Items.Add(leaderboardsButton);
-            Items.Add(exitButton);
+            singleplayerItem.LoadContent(content);
+            mutliplayerItem.LoadContent(content);
+            leaderboardsItem.LoadContent(content);
+            exitItem.LoadContent(content);
+            Items.Add(singleplayerItem);
+            Items.Add(mutliplayerItem);
+            Items.Add(leaderboardsItem);
+            Items.Add(exitItem);
         }
     }
 }

@@ -26,11 +26,10 @@ namespace Reversi.Sprites
             } }
 
         public bool IsMouseOver { get; private set; }
-        public Vector2 position, dimensions;
+        private Vector2 position, dimensions;
         protected Texture2D SpriteTexture;
-        public virtual event EventHandler OnMouseOver, OnMouseOut, OnPressed;
+        public event EventHandler OnMouseOver, OnMouseOut, OnPressed;
         private bool mouseOverOldState=false;
-        public bool IsActive=false;
         public Color DrawingColor = Color.White;
         private Rectangle hitboxRectangle = new Rectangle();
         private string path;
@@ -74,18 +73,18 @@ namespace Reversi.Sprites
             OnPressed += Basic2D_OnPressed;
         }
 
-        protected virtual void Basic2D_OnPressed(object sender, EventArgs e)
+        private void Basic2D_OnPressed(object sender, EventArgs e)
         {
             return;
         }
 
-        protected virtual void Basic2D_OnMouseOver(object sender, EventArgs e)
+        private void Basic2D_OnMouseOver(object sender, EventArgs e)
         {
             mouseOverOldState = true;
             IsMouseOver = true;
         }
 
-        protected virtual void Basic2D_OnMouseOut(object sender, EventArgs e)
+        private void Basic2D_OnMouseOut(object sender, EventArgs e)
         {
             mouseOverOldState = false;
             IsMouseOver = false;
@@ -110,7 +109,7 @@ namespace Reversi.Sprites
         {
             if (InputManager.Instance.MouseIntersects(hitboxRectangle))
             {
-                if (InputManager.Instance.LMBPressed())
+                if (InputManager.Instance.LMBPressed() || InputManager.Instance.KeyPressed(Keys.Enter))
                     OnPressed(this, null);
                 OnMouseOver(this, null);
             }

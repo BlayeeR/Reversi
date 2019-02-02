@@ -20,8 +20,6 @@ namespace Reversi.Sprites
         public Color SelectedFontColor = new Color(193, 86, 9);
         private string fontPath;
 
-        public override event EventHandler OnPressed;
-
         public Button2D(string path, Vector2 position, string text, string fontPath) : base(path, position)
         {
             Text = text;
@@ -32,12 +30,6 @@ namespace Reversi.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            if (IsActive)
-                FontColor = SelectedFontColor;
-            else
-                FontColor = UnselectedFontColor;
-            if (IsActive && (InputManager.Instance.KeyPressed(Keys.Enter)|| InputManager.Instance.LMBPressed()))
-                this.OnPressed(this, null);
             base.Update(gameTime);
         }
 
@@ -53,7 +45,7 @@ namespace Reversi.Sprites
         {
             if (fontPath != String.Empty)
                 font = content.Load<SpriteFont>(fontPath);
-            base.Dimensions = font.MeasureString(Text);
+            Dimensions = font.MeasureString(Text);
             base.LoadContent(content);
         }
     }
