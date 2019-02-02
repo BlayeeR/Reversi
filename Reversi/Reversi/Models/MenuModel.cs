@@ -45,8 +45,21 @@ namespace Reversi.Models
                 else if (Axis == "Y")
                     button.Position = new Vector2((GameStateManager.Instance.Dimensions.X ) / 2, dimensions.Y);
                 dimensions += button.Dimensions;
+                button.OnMouseOver += Button_OnMouseOver;
             }
         }
+
+        private void Button_OnMouseOver(object sender, EventArgs e)
+        {
+            Button2D button = (sender as Button2D);
+            if (Items.IndexOf(button) != itemNumber)
+            {
+                button.IsActive = true;
+                Items[itemNumber].IsActive = false;
+                itemNumber = Items.IndexOf(button);
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (Button2D button in Items)

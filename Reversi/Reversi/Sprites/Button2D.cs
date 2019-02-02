@@ -33,12 +33,10 @@ namespace Reversi.Sprites
         public override void Update(GameTime gameTime)
         {
             if (IsActive)
-            {
                 FontColor = SelectedFontColor;
-            }
             else
                 FontColor = UnselectedFontColor;
-            if (IsActive && InputManager.Instance.KeyPressed(Keys.Enter))
+            if (IsActive && (InputManager.Instance.KeyPressed(Keys.Enter)|| InputManager.Instance.LMBPressed()))
                 this.OnPressed(this, null);
             base.Update(gameTime);
         }
@@ -47,6 +45,7 @@ namespace Reversi.Sprites
         {
             Vector2 textDimensions = font.MeasureString(Text);
             base.Draw(spriteBatch);
+            //spriteBatch.Draw(SpriteTexture, new Rectangle((int)(Position.X-Dimensions.X/2), (int)(Position.Y-Dimensions.Y/2), Dimensions.ToPoint().X, Dimensions.ToPoint().Y), Color.White);
             spriteBatch.DrawString(font, Text, Position + new Vector2(-textDimensions.X / 2, -textDimensions.Y / 2), FontColor);
         }
 
@@ -54,7 +53,8 @@ namespace Reversi.Sprites
         {
             if (fontPath != String.Empty)
                 font = content.Load<SpriteFont>(fontPath);
-            Dimensions = font.MeasureString(Text);
+            base.Dimensions = font.MeasureString(Text);
+            base.LoadContent(content);
         }
     }
 }

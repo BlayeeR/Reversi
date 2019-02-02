@@ -25,8 +25,9 @@ namespace Reversi.Sprites
                 hitboxRectangle.Size = Dimensions.ToPoint();
             } }
 
+        public bool IsMouseOver { get; private set; }
         public Vector2 position, dimensions;
-        private Texture2D texture;
+        protected Texture2D SpriteTexture;
         public virtual event EventHandler OnMouseOver, OnMouseOut, OnPressed;
         private bool mouseOverOldState=false;
         public bool IsActive=false;
@@ -38,7 +39,7 @@ namespace Reversi.Sprites
         {
             Position = position;
             this.path = path;
-            this.texture = null;
+            this.SpriteTexture = null;
             Dimensions = dimensions;
         }
 
@@ -46,14 +47,14 @@ namespace Reversi.Sprites
         {
             Position = position;
             this.path = path;
-            this.texture = null;
+            this.SpriteTexture = null;
             Dimensions = Vector2.Zero;
         }
         public Basic2D(Texture2D texture, Vector2 position, Vector2 dimensions) : this()
         {
             Position = position;
             this.path = String.Empty;
-            this.texture = texture;
+            this.SpriteTexture = texture;
             Dimensions = dimensions;
         }
 
@@ -61,45 +62,48 @@ namespace Reversi.Sprites
         {
             Position = position;
             this.path = String.Empty;
-            this.texture = texture;
+            this.SpriteTexture = texture;
             Dimensions = Vector2.Zero;
         }
 
         private Basic2D()
         {
+            IsMouseOver = false;
             OnMouseOver += Basic2D_OnMouseOver;
             OnMouseOut += Basic2D_OnMouseOut;
             OnPressed += Basic2D_OnPressed;
         }
 
-        private void Basic2D_OnPressed(object sender, EventArgs e)
+        protected virtual void Basic2D_OnPressed(object sender, EventArgs e)
         {
             return;
         }
 
-        private void Basic2D_OnMouseOver(object sender, EventArgs e)
+        protected virtual void Basic2D_OnMouseOver(object sender, EventArgs e)
         {
             mouseOverOldState = true;
+            IsMouseOver = true;
         }
 
-        private void Basic2D_OnMouseOut(object sender, EventArgs e)
+        protected virtual void Basic2D_OnMouseOut(object sender, EventArgs e)
         {
             mouseOverOldState = false;
+            IsMouseOver = false;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (texture != null)
+            if (SpriteTexture != null)
             {
-                spriteBatch.Draw(texture, new Rectangle((Position).ToPoint(), Dimensions.ToPoint()), null, DrawingColor, 0.0f, new Vector2(texture.Bounds.Width / 2, texture.Bounds.Height / 2), SpriteEffects.None, 0);
+                spriteBatch.Draw(SpriteTexture, new Rectangle((Position).ToPoint(), Dimensions.ToPoint()), null, DrawingColor, 0.0f, new Vector2(SpriteTexture.Bounds.Width / 2, SpriteTexture.Bounds.Height / 2), SpriteEffects.None, 0);
             }
         }
 
         public override void LoadContent(ContentManager content)
         {
-            if(texture == null)
-                texture = content.Load<Texture2D>(path);
-            Dimensions = Dimensions==Vector2.Zero?new Vector2(texture.Width, texture.Height):Dimensions;
+            if(SpriteTexture == null)
+                SpriteTexture = content.Load<Texture2D>(path);
+            Dimensions = Dimensions==Vector2.Zero?new Vector2(SpriteTexture.Width, SpriteTexture.Height):Dimensions;
         }
 
         public override void Update(GameTime gameTime)
