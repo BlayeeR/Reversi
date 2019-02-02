@@ -43,10 +43,8 @@ namespace Reversi.Screens
 
         public override void Update(GameTime gameTime)
         {
-            if (InputManager.Instance.KeyPressed(Keys.Enter))
-            {
+            if (InputManager.Instance.AnyKeyPressed())
                 GameStateManager.Instance.ChangeScreen(new TitleScreen(graphicsDevice, game));
-            }
         }
     }
 }

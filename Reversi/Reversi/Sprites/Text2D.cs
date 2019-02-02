@@ -18,7 +18,7 @@ namespace Reversi.Sprites
         public Color FontColor;
         public bool VerticalCenter, HorizontalCenter;
         public Vector2 Position;
-        private string fontPath;
+        private readonly string fontPath;
 
         public Text2D(Vector2 position, string text, string fontPath, Color fontColor, bool verticalCenter = true, bool horizontalCenter = true)
         {

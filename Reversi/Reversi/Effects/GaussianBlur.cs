@@ -11,9 +11,9 @@ namespace Reversi.Effects
 {
     public class GaussianBlur : PostProcessor
     {
-        private float blurAmount;
-        private float[] weightsH, weightsV;
-        private Vector2[] offsetsH, offsetsV;
+        private readonly float blurAmount;
+        private readonly float[] weightsH, weightsV;
+        private readonly Vector2[] offsetsH, offsetsV;
         private RenderCapture capture, captureToTexture;
 
         public GaussianBlur(GraphicsDevice graphicsDevice, ContentManager Content, float BlurAmount) : base(Content.Load<Effect>("GaussianBlur"), graphicsDevice)
@@ -21,10 +21,10 @@ namespace Reversi.Effects
             this.blurAmount = BlurAmount;
 
             // Calculate weights/offsets for horizontal pass  
-            calcSettings(1.0f / (float)graphicsDevice.Viewport.Width, 0,      out weightsH, out offsetsH);
+            CalculateSettings(1.0f / (float)graphicsDevice.Viewport.Width, 0,      out weightsH, out offsetsH);
 
             // Calculate weights/offsets for vertical pass  
-            calcSettings(0, 1.0f / (float)graphicsDevice.Viewport.Height,      out weightsV, out offsetsV);
+            CalculateSettings(0, 1.0f / (float)graphicsDevice.Viewport.Height,      out weightsV, out offsetsV);
             capture = new RenderCapture(graphicsDevice);
             captureToTexture = new RenderCapture(graphicsDevice);
         }
@@ -74,14 +74,14 @@ namespace Reversi.Effects
             return captureToTexture.GetTexture();
         }
 
-        void calcSettings(float w, float h, out float[] weights, out Vector2[] offsets)
+        private void CalculateSettings(float w, float h, out float[] weights, out Vector2[] offsets)
         {
             // 15 Samples  
             weights = new float[15];
             offsets = new Vector2[15];
 
             // Calculate values for center pixel  
-            weights[0] = gaussianFn(0);
+            weights[0] = GaussianFunction(0);
             offsets[0] = new Vector2(0, 0);
             float total = weights[0];
 
@@ -89,7 +89,7 @@ namespace Reversi.Effects
             for (int i = 0; i < 7; i++)
             {
                 // Weight each pair of samples according to Gaussian function     
-                float weight = gaussianFn(i + 1);
+                float weight = GaussianFunction(i + 1);
                 weights[i * 2 + 1] = weight;
                 weights[i * 2 + 2] = weight;
                 total += weight * 2;
@@ -107,7 +107,7 @@ namespace Reversi.Effects
                 weights[i] /= total;
         }
 
-        float gaussianFn(float x)
+        float GaussianFunction(float x)
         {
             return (float)((1.0f / Math.Sqrt(2 * Math.PI * blurAmount * blurAmount)) * Math.Exp(-(x * x) / (2 * blurAmount * blurAmount)));
         }

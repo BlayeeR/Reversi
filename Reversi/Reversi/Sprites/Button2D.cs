@@ -18,7 +18,7 @@ namespace Reversi.Sprites
         public Color FontColor;
         public Color UnselectedFontColor = new Color(122, 54, 6);
         public Color SelectedFontColor = new Color(193, 86, 9);
-        private string fontPath;
+        private readonly string fontPath;
 
         public Button2D(string path, Vector2 position, string text, string fontPath) : base(path, position)
         {

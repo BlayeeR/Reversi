@@ -32,7 +32,7 @@ namespace Reversi.Sprites
         private bool mouseOverOldState=false;
         public Color DrawingColor = Color.White;
         private Rectangle hitboxRectangle = new Rectangle();
-        private string path;
+        private readonly string path;
 
         public Basic2D(string path, Vector2 position, Vector2 dimensions) :  this()
         {
@@ -114,7 +114,7 @@ namespace Reversi.Sprites
         {
             if (InputManager.Instance.MouseIntersects(hitboxRectangle))
             {
-                if (InputManager.Instance.LMBPressed())
+                if (InputManager.Instance.MouseButtonPressed(InputManager.MouseButtons.Left))
                     OnPressed(this, null);
                 OnMouseOver(this, null);
             }

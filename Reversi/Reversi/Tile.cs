@@ -22,7 +22,7 @@ namespace Reversi
             } get { return side; } }
         private bool side;
         public bool Visible = false;
-        private bool hideBackground;
+        private readonly bool hideBackground;
         public Color DrawingColor { set { tileSprite.DrawingColor = value; } }
         private Basic2D tileSprite, diskSprite;
         public event EventHandler OnTilePressed, OnMouseOver, OnMouseOut;

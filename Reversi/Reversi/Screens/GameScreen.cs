@@ -21,8 +21,10 @@ namespace Reversi.Screens
     {
         private TileManager tileManager;
         private Basic2D backgroundImage;
-        private bool gameEnded = false, singleplayer, paused = false;
-        private Text2D[] afterGameTexts = new Text2D[2];
+        private bool gameEnded = false;
+        private readonly bool singleplayer;
+        private bool paused = false;
+        private readonly Text2D[] afterGameTexts = new Text2D[2];
         private Text2D scoreText;
         private ScoreManager scoreManager;
         private GaussianBlur gaussianBlur;

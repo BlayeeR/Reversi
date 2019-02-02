@@ -13,6 +13,8 @@ namespace Reversi.Managers
         private KeyboardState currentKeyState, previousKeyState;
         private MouseState currentMouseState, previousMouseState;
 
+        public enum MouseButtons { Left, Middle, Right, X1, X2 };
+
         private static InputManager instance;
 
         public static InputManager Instance
@@ -34,13 +36,6 @@ namespace Reversi.Managers
             currentMouseState = Mouse.GetState();
         }
 
-        public bool LMBPressed()
-        {
-            if (currentMouseState.LeftButton == ButtonState.Released && previousMouseState.LeftButton == ButtonState.Pressed)
-                return true;
-            return false;
-        }
-
         public bool KeyPressed(params Keys[] keys)
         {
             foreach (Keys key in keys)
@@ -48,6 +43,58 @@ namespace Reversi.Managers
                 if (currentKeyState.IsKeyDown(key) && previousKeyState.IsKeyUp(key))
                     return true;
             }
+            return false;
+        }
+
+        public bool MouseButtonPressed(params MouseButtons[] buttons)
+        {
+            foreach(MouseButtons button in buttons)
+            {
+                switch(button)
+                {
+                    case MouseButtons.Left:
+                        {
+                            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+                                return true;
+                            return false;
+                        }
+                    case MouseButtons.Middle:
+                        {
+                            if (currentMouseState.MiddleButton == ButtonState.Pressed && previousMouseState.MiddleButton == ButtonState.Released)
+                                return true;
+                            return false;
+                        }
+                    case MouseButtons.Right:
+                        {
+                            if (currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Released)
+                                return true;
+                            return false;
+                        }
+                    case MouseButtons.X1:
+                        {
+                            if (currentMouseState.XButton1 == ButtonState.Pressed && previousMouseState.XButton1 == ButtonState.Released)
+                                return true;
+                            return false;
+                        }
+                    case MouseButtons.X2:
+                        {
+                            if (currentMouseState.XButton2 == ButtonState.Pressed && previousMouseState.XButton2 == ButtonState.Released)
+                                return true;
+                            return false;
+                        }
+                }
+            }
+            return false;
+        }
+
+        public bool AnyKeyPressed()
+        {
+            foreach (Keys key in Enum.GetValues(typeof(Keys)))
+                if (KeyPressed(key))
+                    return true;
+            foreach (MouseButtons button in Enum.GetValues(typeof(MouseButtons)))
+                if (MouseButtonPressed(button))
+                    return true;
             return false;
         }
 

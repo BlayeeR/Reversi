@@ -17,14 +17,16 @@ namespace Reversi.Managers
     {
         List<List<Tile>> tiles;
         private Vector2 gameBoardPosition, gameBoardDimensions;
-        private int boardSize = 8, previousMovements;
+        private readonly int boardSize = 8;
+        private int previousMovements;
         private List<Movement> _movements;
         private event EventHandler OnSideChange, OnMovePerformed;
         public event EventHandler OnGameEnded;
         private Text2D scoreText;
-        private bool currentSide, singleplayer = false;
+        private bool currentSide;
+        private readonly bool singleplayer = false;
         private double aiMovementDelay = 0;
-        private Score[] score = new Score[2];
+        private readonly Score[] score = new Score[2];
         private bool CurrentSide { set { currentSide = value;//false player1, true ai/player2
                 OnSideChange(this, null);
             } get { return currentSide; } }
@@ -218,8 +220,10 @@ namespace Reversi.Managers
                     for(int i =0; i< 8;i++)
                     {
                         int x = tiles.IndexOf(tilelist), y = tilelist.IndexOf(tile);
-                        List<Tile> takenTiles = new List<Tile>();
-                        takenTiles.Add(tile);
+                        List<Tile> takenTiles = new List<Tile>
+                        {
+                            tile
+                        };
                         switch (i)
                         {
                             case 0: { xi = 0;yi = 1;break; }

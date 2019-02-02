@@ -10,7 +10,7 @@ namespace Reversi.Managers
 {
     public class ScoreManager
     {
-        private static string filename = "scores.xml"; 
+        private static readonly string filename = "scores.xml"; 
         public List<Score> Scores { get; private set; }
         public ScoreManager()
           : this(new List<Score>())

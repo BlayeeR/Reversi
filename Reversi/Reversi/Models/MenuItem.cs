@@ -35,7 +35,7 @@ namespace Reversi.Models
 
         public void Update(GameTime gameTime)
         {
-            if (IsActive && (InputManager.Instance.KeyPressed(Keys.Enter) || InputManager.Instance.LMBPressed()))
+            if (IsActive && (InputManager.Instance.KeyPressed(Keys.Enter) || InputManager.Instance.MouseButtonPressed(InputManager.MouseButtons.Left)))
                 OnPressed(this, null);
             if (IsActive)
                 button.FontColor = button.SelectedFontColor;
