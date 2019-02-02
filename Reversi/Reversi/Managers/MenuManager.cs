@@ -27,7 +27,7 @@ namespace Reversi.Managers
                 //_menus.Peek().Initialize();
                 if (content != null)
                 {
-                    menus.Peek().LoadContent();
+                    menus.Peek().LoadContent(content);
                 }
             }
 #pragma warning disable CS0168 // Variable is declared but never used

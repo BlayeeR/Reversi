@@ -31,11 +31,6 @@ namespace Reversi.Screens
             spriteBatch.End();
         }
 
-        public override void Initialize()
-        {
-
-        }
-
         public override void LoadContent(ContentManager content)
         {
             splashImage.LoadContent(content);
@@ -43,7 +38,7 @@ namespace Reversi.Screens
 
         public override void UnloadContent()
         {
-
+            splashImage.UnloadContent();
         }
 
         public override void Update(GameTime gameTime)

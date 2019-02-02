@@ -45,6 +45,7 @@ namespace Reversi.Menus
             Items.Add(mainMenuItem);
             resumeItem.LoadContent(content);
             mainMenuItem.LoadContent(content);
+            base.LoadContent(content);
         }
     }
 }

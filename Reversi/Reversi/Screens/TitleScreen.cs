@@ -39,23 +39,19 @@ namespace Reversi.Screens
             spriteBatch.End();
         }
 
-        public override void Initialize()
-        {
-
-        }
-
         public override void LoadContent(ContentManager content)
         {
             backgroundImage.LoadContent(content);
             creditsText.LoadContent(content);
             menuManager.LoadContent(content);
-            menu.LoadContent(content);
             menuManager.AddMenu(menu);
         }
 
         public override void UnloadContent()
         {
-
+            backgroundImage.UnloadContent();
+            creditsText.UnloadContent();
+            menu.UnloadContent();
         }
 
         public override void Update(GameTime gameTime)

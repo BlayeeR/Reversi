@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Reversi.Events;
+using Reversi.Interfaces;
 using Reversi.Sprites;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Reversi.Managers
 {
-    public class TileManager
+    public class TileManager : IComponent
     {
         List<List<Tile>> tiles;
         private Vector2 gameBoardPosition, gameBoardDimensions;
@@ -261,6 +262,13 @@ namespace Reversi.Managers
                 }
             }
             return movements;
+        }
+
+        public void UnloadContent()
+        {
+            foreach (List<Tile> list in tiles)
+                foreach (Tile tile in list)
+                    tile.UnloadContent();
         }
     }
 }

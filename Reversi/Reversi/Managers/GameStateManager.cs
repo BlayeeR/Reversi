@@ -41,7 +41,6 @@ namespace Reversi.Managers
             try
             {
                 screens.Push(screen);
-                screens.Peek().Initialize();
                 if (content != null)
                 {
                     screens.Peek().LoadContent(content);

@@ -45,7 +45,6 @@ namespace Reversi.Managers
             using (var writer = new StreamWriter(new FileStream(filename, FileMode.Create)))
             {
                 var serilizer = new XmlSerializer(typeof(List<Score>));
-
                 serilizer.Serialize(writer, scoreManager.Scores.Take(10).ToList());
             }
         }

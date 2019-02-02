@@ -10,12 +10,14 @@ using System.Threading.Tasks;
 
 namespace Reversi.Models
 {
-    public abstract class Sprite : ISprite
+    public abstract class Sprite : IComponent
     {
         public abstract void Draw(SpriteBatch spriteBatch);
 
         public abstract void LoadContent(ContentManager content);
 
         public abstract void Update(GameTime gameTime);
+
+        public abstract void UnloadContent();
     }
 }

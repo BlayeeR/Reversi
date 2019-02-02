@@ -45,5 +45,9 @@ namespace Reversi.Sprites
         public override void Update(GameTime gameTime)
         {
         }
+
+        public override void UnloadContent()
+        {
+        }
     }
 }

@@ -40,11 +40,6 @@ namespace Reversi.Screens
             spriteBatch.End();
         }
 
-        public override void Initialize()
-        {
-
-        }
-
         public override void LoadContent(ContentManager content)
         {
             backgroundImage.LoadContent(content);
@@ -58,7 +53,9 @@ namespace Reversi.Screens
 
         public override void UnloadContent()
         {
-
+            creditsText.UnloadContent();
+            highscoresText.UnloadContent();
+            backgroundImage.UnloadContent();
         }
 
         public override void Update(GameTime gameTime)

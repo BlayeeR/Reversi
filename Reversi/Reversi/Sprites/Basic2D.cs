@@ -105,11 +105,16 @@ namespace Reversi.Sprites
             Dimensions = Dimensions==Vector2.Zero?new Vector2(SpriteTexture.Width, SpriteTexture.Height):Dimensions;
         }
 
+        public override void UnloadContent()
+        {
+            SpriteTexture.Dispose();
+        }
+
         public override void Update(GameTime gameTime)
         {
             if (InputManager.Instance.MouseIntersects(hitboxRectangle))
             {
-                if (InputManager.Instance.LMBPressed() || InputManager.Instance.KeyPressed(Keys.Enter))
+                if (InputManager.Instance.LMBPressed())
                     OnPressed(this, null);
                 OnMouseOver(this, null);
             }

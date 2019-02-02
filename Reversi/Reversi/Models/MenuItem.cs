@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Reversi.Interfaces;
+using Reversi.Managers;
 using Reversi.Sprites;
 using System;
 using System.Collections.Generic;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Reversi.Models
 {
-    public class MenuItem
+    public class MenuItem : IComponent
     {
         private Button2D button;
         public Vector2 Dimensions { get { return button.Dimensions; } }
@@ -22,7 +25,6 @@ namespace Reversi.Models
         {
             this.button = button;
             IsActive = false;
-            button.OnPressed += Button_OnPressed;
             button.OnMouseOver += Button_OnMouseOver;
         }
 
@@ -33,6 +35,8 @@ namespace Reversi.Models
 
         public void Update(GameTime gameTime)
         {
+            if (IsActive && (InputManager.Instance.KeyPressed(Keys.Enter) || InputManager.Instance.LMBPressed()))
+                OnPressed(this, null);
             if (IsActive)
                 button.FontColor = button.SelectedFontColor;
             else
@@ -50,10 +54,9 @@ namespace Reversi.Models
             button.Draw(spriteBatch);
         }
 
-        private void Button_OnPressed(object sender, EventArgs e)
+        public void UnloadContent()
         {
-            if (IsActive)
-                OnPressed(this, null);
+            button.UnloadContent();
         }
     }
 }

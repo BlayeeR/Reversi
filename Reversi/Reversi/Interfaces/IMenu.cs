@@ -9,12 +9,8 @@ using System.Threading.Tasks;
 
 namespace Reversi.Interfaces
 {
-    interface IMenu
+    interface IMenu : IComponent
     {
         void AlignMenuItems();
-        void LoadContent();
-        void Update(GameTime gameTime);
-        void Draw(SpriteBatch spriteBatch);
-        void LoadContent(ContentManager content);
     }
 }

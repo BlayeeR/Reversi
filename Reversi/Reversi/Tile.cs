@@ -6,35 +6,36 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Reversi.Interfaces;
 using Reversi.Sprites;
 
 namespace Reversi
 {
-    public class Tile 
+    public class Tile : IComponent
     {
         public Vector2 Position { private set; get; }
         public bool Side { set { side = value;
                 if (side)
-                    _diskSprite.DrawingColor = Color.White;
+                    diskSprite.DrawingColor = Color.White;
                 else
-                    _diskSprite.DrawingColor = new Color(40, 40, 40, 256);
+                    diskSprite.DrawingColor = new Color(40, 40, 40, 256);
             } get { return side; } }
         private bool side;
         public bool Visible = false;
         private bool hideBackground;
-        public Color DrawingColor { set { _tileSprite.DrawingColor = value; } }
-        private Basic2D _tileSprite, _diskSprite;
+        public Color DrawingColor { set { tileSprite.DrawingColor = value; } }
+        private Basic2D tileSprite, diskSprite;
         public event EventHandler OnTilePressed, OnMouseOver, OnMouseOut;
         public Tile(bool side, bool visible, Vector2 position, Vector2 dimensions, bool hideBackground = false)
         {
             Position = position;
-            _tileSprite = new Basic2D("Game/Tile", position, dimensions);
-            _diskSprite = new Basic2D("Game/Disk", position, dimensions * 0.8f);
+            tileSprite = new Basic2D("Game/Tile", position, dimensions);
+            diskSprite = new Basic2D("Game/Disk", position, dimensions * 0.8f);
             Side = side;
             Visible = visible;
-            _tileSprite.OnPressed += TileSprite_OnPressed;
-            _tileSprite.OnMouseOver += TileSprite_OnMouseOver;
-            _tileSprite.OnMouseOut += TileSprite_OnMouseOut;
+            tileSprite.OnPressed += TileSprite_OnPressed;
+            tileSprite.OnMouseOver += TileSprite_OnMouseOver;
+            tileSprite.OnMouseOut += TileSprite_OnMouseOut;
             this.hideBackground = hideBackground;
         }
 
@@ -55,22 +56,28 @@ namespace Reversi
 
         public void Update(GameTime gameTime)
         {
-            _tileSprite.Update(gameTime);
-            _diskSprite.Update(gameTime);
+            tileSprite.Update(gameTime);
+            diskSprite.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             if(!hideBackground)
-                _tileSprite.Draw(spriteBatch);
+                tileSprite.Draw(spriteBatch);
             if(Visible)
-                _diskSprite.Draw(spriteBatch);
+                diskSprite.Draw(spriteBatch);
         }
 
         public void LoadContent(ContentManager content)
         {
-            _tileSprite.LoadContent(content);
-            _diskSprite.LoadContent(content);
+            tileSprite.LoadContent(content);
+            diskSprite.LoadContent(content);
+        }
+
+        public void UnloadContent()
+        {
+            tileSprite.UnloadContent();
+            diskSprite.UnloadContent();
         }
 
         public void ChangeSide()

@@ -45,7 +45,7 @@
     <Compile Include="Effects\PostProcessor.cs" />
     <Compile Include="Effects\RenderCapture.cs" />
     <Compile Include="Events\GameEndedEventArgs.cs" />
-    <Compile Include="Interfaces\ISprite.cs" />
+    <Compile Include="Interfaces\IComponent.cs" />
     <Compile Include="Menus\PauseMenu.cs" />
     <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Models\Sprite.cs" />
@@ -60,7 +60,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="Models\GameState.cs" />
     <Compile Include="Managers\GameStateManager.cs" />
-    <Compile Include="Interfaces\IGameState.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Menus\TitleMenu.cs" />
     <Compile Include="Interfaces\IMenu.cs" />

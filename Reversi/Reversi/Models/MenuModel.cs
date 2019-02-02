@@ -68,11 +68,6 @@ namespace Reversi.Models
             }
         }
 
-        public void LoadContent()
-        {
-            AlignMenuItems();
-        }
-
         public void Update(GameTime gameTime)
         {
             if (Axis == "X")
@@ -103,6 +98,15 @@ namespace Reversi.Models
             }
         }
 
-        public abstract void LoadContent(ContentManager content);
+        public virtual void LoadContent(ContentManager content)
+        {
+            AlignMenuItems();
+        }
+
+        public void UnloadContent()
+        {
+            foreach (MenuItem item in Items)
+                item.UnloadContent();
+        }
     }
 }

@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace Reversi.Interfaces
 {
-    interface ISprite
+    interface IComponent
     {
-        void LoadContent(ContentManager content);
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
+        void LoadContent(ContentManager content);
+        void UnloadContent();
     }
 }

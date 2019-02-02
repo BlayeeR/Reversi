@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace Reversi.Models
 {
-    public abstract class GameState : IGameState
+    public abstract class GameState : IComponent
     {
         protected GraphicsDevice graphicsDevice;
         protected Game game;
@@ -19,7 +19,6 @@ namespace Reversi.Models
             this.game = game;
             Type = this.GetType();
         }
-        public abstract void Initialize();
         public abstract void LoadContent(ContentManager content);
         public abstract void UnloadContent();
         public abstract void Update(GameTime gameTime);

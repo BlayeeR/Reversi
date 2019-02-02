@@ -62,6 +62,7 @@ namespace Reversi.Menus
             Items.Add(mutliplayerItem);
             Items.Add(leaderboardsItem);
             Items.Add(exitItem);
+            base.LoadContent(content);
         }
     }
 }
